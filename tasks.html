@@ -1,0 +1,3470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЕНТ Математика | Формулы и задачи</title>
+    <!-- MathJax для LaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+            background: #f5f5f5;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        .header {
+            background: #ffffff;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 span {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Панель навигации с переключателем */
+        .nav-section {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin: 30px 0 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f3;
+        }
+
+        .nav-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .topic-selector {
+            flex: 2;
+            min-width: 350px;
+        }
+
+        .topic-selector label {
+            font-size: 1em;
+            color: #3498db;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 10px;
+        }
+
+        select {
+            width: 70%;
+            padding: 10px 15px;
+            font-size: 1em;
+            background: #f8fafc;
+            color: #2c3e50;
+            border: 2px solid #e0e7e9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        select:hover, select:focus {
+            border-color: #3498db;
+            outline: none;
+            background: #ffffff;
+        }
+
+        /* Переключатель режимов */
+        .mode-switcher {
+            flex: 1;
+            display: flex;
+            background: #f0f3f6;
+            border-radius: 50px;
+            padding: 4px;
+            border: 1px solid #d0dde8;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+            color: #5d6d7e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .mode-btn.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .mode-btn:first-child.active {
+            background: #3498db;
+        }
+
+        .mode-btn:last-child.active {
+            background: #27ae60;
+        }
+
+        .mode-btn:last-child.active i {
+            color: white;
+        }
+
+        .formula-count {
+            background: #e8f4f8;
+            color: #3498db;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1em;
+            border: 1px solid #bde0f0;
+            white-space: nowrap;
+        }
+
+        /* Основной контент */
+        .content-section {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        /* Боковое меню */
+        .sidebar {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 180px;
+            border: 1px solid #eef2f3;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            font-weight: 600;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .topic-list {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .topic-list::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .topic-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .topic-list::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 5px;
+        }
+
+        .topic-list li {
+            margin-bottom: 8px;
+        }
+
+        .topic-list button {
+            width: 100%;
+            text-align: left;
+            padding: 10px 15px;
+            background: transparent;
+            border: none;
+            color: #5d6d7e;
+            font-size: 0.95em;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-family: 'Georgia', serif;
+            border-left: 3px solid transparent;
+        }
+
+        .topic-list button:hover {
+            background: #f8fafc;
+            color: #3498db;
+            border-left-color: #3498db;
+        }
+
+        .topic-list button.active {
+            background: #e8f4f8;
+            color: #3498db;
+            border-left-color: #3498db;
+            font-weight: 600;
+        }
+
+        /* Область формул */
+        .formulas-area {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 35px;
+            border: 1px solid #eef2f3;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+        }
+
+        .topic-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eef2f3;
+            padding-bottom: 20px;
+        }
+
+        .topic-header h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .topic-header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        /* Поиск */
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            background: #f8fafc;
+            border: 2px solid #e0e7e9;
+            border-radius: 8px;
+            color: #2c3e50;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+            background: #ffffff;
+        }
+
+        .search-box input::placeholder {
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        /* Сетка формул */
+        .formulas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s;
+            border: 1px solid #eef2f3;
+            position: relative;
+        }
+
+        .formula-card:hover {
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.08);
+            border-color: #3498db;
+        }
+
+        .formula-number {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #b0c4d9;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .formula-title {
+            color: #3498db;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding-right: 50px;
+            border-bottom: 1px dashed #d0e0eb;
+            padding-bottom: 8px;
+        }
+
+        .formula-content {
+            font-size: 1.3em;
+            margin: 20px 0;
+            color: #2c3e50;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid #eef2f3;
+            overflow-x: auto;
+        }
+
+        .formula-content mjx-container {
+            font-size: 1.1em;
+        }
+
+        .formula-desc {
+            color: #5d6d7e;
+            font-size: 0.95em;
+            line-height: 1.5;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .formula-example {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f7fc;
+            border-radius: 6px;
+            color: #2c3e50;
+            font-size: 1.1em;
+            border-left: 4px solid #f1c40f;
+            overflow-x: auto;
+        }
+
+        /* Стили для задач */
+        .tasks-area {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 35px;
+            border: 1px solid #eef2f3;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+        }
+
+        .tasks-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eef2f3;
+            padding-bottom: 20px;
+        }
+
+        .tasks-header h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .tasks-header h2 span {
+            color: #27ae60;
+            font-size: 0.7em;
+            margin-left: 15px;
+            font-style: italic;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .task-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #eef2f3;
+            transition: all 0.3s;
+        }
+
+        .task-card:hover {
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.08);
+            border-color: #27ae60;
+        }
+
+        .task-number {
+            color: #27ae60;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #d0e0eb;
+            padding-bottom: 8px;
+        }
+
+/* Исправления для задач */
+.task-condition,
+.task-solution,
+.task-answer-content {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.task-solution div {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 8px;
+}
+
+.task-solution mjx-container,
+.task-condition mjx-container,
+.task-answer-content mjx-container {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 5px 0 !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Для очень длинных формул добавляем горизонтальную прокрутку */
+.task-solution, 
+.task-condition {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Но внутри сохраняем перенос для текста */
+.task-solution div {
+    white-space: pre-wrap;
+}
+
+/* Специально для LaTeX формул */
+mjx-container[jax="CHTML"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    padding: 2px 0px !important;
+}
+
+/* Улучшенное отображение для мобильных */
+@media (max-width: 768px) {
+    .task-condition,
+    .task-solution,
+    .task-answer-content {
+        font-size: 0.9em;
+        padding: 12px;
+    }
+    
+    .task-solution mjx-container,
+    .task-condition mjx-container {
+        font-size: 0.9em;
+    }
+}
+
+        .task-answer {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .task-answer-title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .task-answer-content {
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        /* Кнопки действий */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: flex-end;
+            padding-top: 20px;
+            border-top: 2px solid #eef2f3;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            border: 1px solid #2980b9;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #5d6d7e;
+            border: 1px solid #d0dde8;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            border: 1px solid #229954;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+        }
+
+        /* Подвал */
+        .footer {
+            background: #ffffff;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 2px solid #eef2f3;
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .content-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .formulas-grid, .tasks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .mode-switcher {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .topic-selector {
+                min-width: auto;
+            }
+
+            select {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .formula-card, .task-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1><span>📐</span> МАТЕМАТИКА <span>|</span> ПОДГОТОВКА К ЕНТ</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Панель навигации с переключателем -->
+        <div class="nav-section">
+            <div class="nav-row">
+                <div class="topic-selector">
+                    <label>📚 ТЕМА:</label>
+                    <select id="topicSelect" onchange="changeTopic(this.value)">
+                        <option value="fsu">01. Формулы сокращенного умножения (ФСУ)</option>
+                        <option value="powers">02. Свойства степеней и корней</option>
+                        <option value="combinatorics">03. Комбинаторика и факториалы</option>
+                        <option value="quadratic">04. Квадратные уравнения и функция</option>
+                        <option value="progressions">05. Арифметическая и геометрическая прогрессии</option>
+                        <option value="trigonometry">06. Тригонометрические формулы</option>
+                        <option value="trig_equations">07. Тригонометрические уравнения</option>
+                        <option value="trig_inequalities">08. Тригонометрические неравенства</option>
+                        <option value="plane_geometry">09. Планиметрия (треугольники, четырехугольники)</option>
+                        <option value="circle">10. Окружность и круг</option>
+                        <option value="vectors_plane">11. Векторы на плоскости</option>
+                        <option value="derivatives">12. Производная и ее применение</option>
+                        <option value="integrals">13. Интегралы и первообразная</option>
+                        <option value="logarithms">14. Логарифмы и показательная функция</option>
+                        <option value="stereometry">15. Стереометрия (объемы и поверхности)</option>
+                        <option value="binomial">16. Бином Ньютона</option>
+                        <option value="limits">17. Пределы</option>
+                        <option value="function_properties">18. Свойства функций</option>
+                    </select>
+                </div>
+
+                <!-- Переключатель режимов -->
+                <div class="mode-switcher">
+                    <button class="mode-btn active" id="formulasModeBtn" onclick="switchMode('formulas')">
+                        📚 ФОРМУЛЫ
+                    </button>
+                    <button class="mode-btn" id="tasksModeBtn" onclick="switchMode('tasks')">
+                        📝 ЗАДАЧИ
+                    </button>
+                </div>
+
+                <span class="formula-count" id="itemCount">42 формулы</span>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="content-section">
+            <!-- Боковое меню -->
+            <div class="sidebar">
+                <h3 id="sidebarTitle">📋 ФОРМУЛЫ ПО ТЕМАМ</h3>
+                <ul class="topic-list" id="topicList">
+                    <li><button class="active" onclick="changeTopic('fsu')">01. ФСУ (9)</button></li>
+                    <li><button onclick="changeTopic('powers')">02. Степени и корни (15)</button></li>
+                    <li><button onclick="changeTopic('combinatorics')">03. Комбинаторика (8)</button></li>
+                    <li><button onclick="changeTopic('quadratic')">04. Квадратные уравнения (14)</button></li>
+                    <li><button onclick="changeTopic('progressions')">05. Прогрессии (12)</button></li>
+                    <li><button onclick="changeTopic('trigonometry')">06. Тригонометрия (42)</button></li>
+                    <li><button onclick="changeTopic('trig_equations')">07. Триг. уравнения (18)</button></li>
+                    <li><button onclick="changeTopic('trig_inequalities')">08. Триг. неравенства (8)</button></li>
+                    <li><button onclick="changeTopic('plane_geometry')">09. Планиметрия (28)</button></li>
+                    <li><button onclick="changeTopic('circle')">10. Окружность (16)</button></li>
+                    <li><button onclick="changeTopic('vectors_plane')">11. Векторы (12)</button></li>
+                    <li><button onclick="changeTopic('derivatives')">12. Производная (24)</button></li>
+                    <li><button onclick="changeTopic('integrals')">13. Интегралы (16)</button></li>
+                    <li><button onclick="changeTopic('logarithms')">14. Логарифмы (18)</button></li>
+                    <li><button onclick="changeTopic('stereometry')">15. Стереометрия (32)</button></li>
+                    <li><button onclick="changeTopic('binomial')">16. Бином Ньютона (5)</button></li>
+                    <li><button onclick="changeTopic('limits')">17. Пределы (8)</button></li>
+                    <li><button onclick="changeTopic('function_properties')">18. Свойства функций (10)</button></li>
+                </ul>
+            </div>
+
+            <!-- Динамический контент (формулы или задачи) -->
+            <div id="dynamicContent">
+                <!-- По умолчанию показываем формулы -->
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>📚 Полный справочник формул и задач по математике • 7–11 классы • Подготовка к ЕНТ 2026</p>
+            <p style="margin-top: 8px; font-size: 0.9em;">© Справочное пособие для учителей и учеников</p>
+        </div>
+    </div>
+
+    <script>
+        // База данных формул
+        const formulasDB = {
+            fsu: {
+                title: "Формулы сокращенного умножения (ФСУ)",
+                description: "Основные формулы для преобразования алгебраических выражений",
+                formulas: [
+                    { number: 1, title: "Квадрат суммы", formula: "(a+b)^2 = a^2 + 2ab + b^2", desc: "Квадрат суммы двух чисел", example: "(x+3)^2 = x^2 + 6x + 9" },
+                    { number: 2, title: "Квадрат разности", formula: "(a-b)^2 = a^2 - 2ab + b^2", desc: "Квадрат разности двух чисел", example: "(x-4)^2 = x^2 - 8x + 16" },
+                    { number: 3, title: "Разность квадратов", formula: "a^2 - b^2 = (a-b)(a+b)", desc: "Произведение разности и суммы", example: "x^2 - 9 = (x-3)(x+3)" },
+                    { number: 4, title: "Куб суммы", formula: "(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3", desc: "Куб суммы двух чисел", example: "(x+2)^3 = x^3 + 6x^2 + 12x + 8" },
+                    { number: 5, title: "Куб разности", formula: "(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3", desc: "Куб разности двух чисел", example: "(x-1)^3 = x^3 - 3x^2 + 3x - 1" },
+                    { number: 6, title: "Сумма кубов", formula: "a^3 + b^3 = (a+b)(a^2 - ab + b^2)", desc: "Разложение суммы кубов", example: "x^3 + 8 = (x+2)(x^2 - 2x + 4)" },
+                    { number: 7, title: "Разность кубов", formula: "a^3 - b^3 = (a-b)(a^2 + ab + b^2)", desc: "Разложение разности кубов", example: "x^3 - 27 = (x-3)(x^2 + 3x + 9)" },
+                    { number: 8, title: "Квадрат суммы трех", formula: "(a+b+c)^2 = a^2 + b^2 + c^2 + 2ab + 2ac + 2bc", desc: "Квадрат суммы трех чисел" },
+                    { number: 9, title: "Квадрат разности трех", formula: "(a-b-c)^2 = a^2 + b^2 + c^2 - 2ab - 2ac + 2bc", desc: "Квадрат разности трех чисел" }
+                ]
+            },
+            powers: {
+                title: "Свойства степеней и корней",
+                description: "Основные свойства степеней и арифметических корней",
+                formulas: [
+                    { number: 10, title: "Нулевая степень", formula: "a^0 = 1, \\; a \\neq 0", desc: "Любое число (кроме нуля) в нулевой степени равно 1", example: "5^0 = 1" },
+                    { number: 11, title: "Первая степень", formula: "a^1 = a", desc: "Число в первой степени равно самому себе" },
+                    { number: 12, title: "Умножение степеней", formula: "a^m \\cdot a^n = a^{m+n}", desc: "При умножении степеней с одинаковыми основаниями показатели складываются", example: "2^3 \\cdot 2^4 = 2^7" },
+                    { number: 13, title: "Деление степеней", formula: "a^m : a^n = a^{m-n}", desc: "При делении степеней показатели вычитаются", example: "2^5 : 2^2 = 2^3" },
+                    { number: 14, title: "Степень степени", formula: "(a^m)^n = a^{mn}", desc: "При возведении степени в степень показатели перемножаются", example: "(2^3)^4 = 2^{12}" },
+                    { number: 15, title: "Степень произведения", formula: "(ab)^n = a^n \\cdot b^n", desc: "Степень произведения равна произведению степеней", example: "(2x)^3 = 8x^3" },
+                    { number: 16, title: "Степень дроби", formula: "\\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}", desc: "Степень дроби равна дроби степеней", example: "\\left(\\frac{2}{3}\\right)^2 = \\frac{4}{9}" },
+                    { number: 17, title: "Отрицательная степень", formula: "a^{-n} = \\frac{1}{a^n}", desc: "Число в отрицательной степени обратно числу в положительной степени", example: "2^{-3} = \\frac{1}{8}" },
+                    { number: 18, title: "Корень из степени", formula: "\\sqrt[n]{a^m} = a^{m/n}", desc: "Корень n-й степени из степени m", example: "\\sqrt[3]{x^6} = x^2" },
+                    { number: 19, title: "Корень из произведения", formula: "\\sqrt[n]{ab} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}", desc: "Корень из произведения равен произведению корней", example: "\\sqrt{4x} = 2\\sqrt{x}" },
+                    { number: 20, title: "Корень из дроби", formula: "\\sqrt[n]{\\frac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}", desc: "Корень из дроби равен дроби корней", example: "\\sqrt{\\frac{9}{4}} = \\frac{3}{2}" },
+                    { number: 21, title: "Корень из корня", formula: "\\sqrt[m]{\\sqrt[n]{a}} = \\sqrt[mn]{a}", desc: "Корень из корня", example: "\\sqrt{\\sqrt[3]{64}} = \\sqrt[6]{64} = 2" },
+                    { number: 22, title: "Квадратный корень из квадрата", formula: "\\sqrt{a^2} = |a|", desc: "Корень из квадрата равен модулю числа" }
+                ]
+            },
+            quadratic: {
+                title: "Квадратные уравнения и квадратичная функция",
+                description: "Решение квадратных уравнений, свойства параболы, теорема Виета",
+                formulas: [
+                    { number: 23, title: "Неполное уравнение (ax² + c = 0)", formula: "ax^2 + c = 0 \\Rightarrow x^2 = -\\frac{c}{a} \\Rightarrow x = \\pm \\sqrt{-\\frac{c}{a}}, \\; -\\frac{c}{a} > 0", desc: "Решение неполного квадратного уравнения" },
+                    { number: 24, title: "Неполное уравнение (ax² + bx = 0)", formula: "ax^2 + bx = 0 \\Rightarrow x(ax + b) = 0 \\Rightarrow x_1 = 0, \\; x_2 = -\\frac{b}{a}", desc: "Решение неполного квадратного уравнения" },
+                    { number: 25, title: "Дискриминант", formula: "D = b^2 - 4ac", desc: "Дискриминант квадратного уравнения ax² + bx + c = 0" },
+                    { number: 26, title: "Корни квадратного уравнения (D > 0)", formula: "x_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a}", desc: "Формула корней квадратного уравнения при положительном дискриминанте" },
+                    { number: 27, title: "Корень квадратного уравнения (D = 0)", formula: "x = -\\frac{b}{2a}", desc: "Единственный корень при нулевом дискриминанте" },
+                    { number: 28, title: "Теорема Виета (для полного уравнения)", formula: "ax^2 + bx + c = 0 \\Rightarrow \\begin{cases} x_1 + x_2 = -\\frac{b}{a} \\\\ x_1 \\cdot x_2 = \\frac{c}{a} \\end{cases}", desc: "Сумма и произведение корней квадратного уравнения" },
+                    { number: 29, title: "Теорема Виета (для приведенного уравнения)", formula: "x^2 + px + q = 0 \\Rightarrow \\begin{cases} x_1 + x_2 = -p \\\\ x_1 \\cdot x_2 = q \\end{cases}", desc: "Для приведенного квадратного уравнения" },
+                    { number: 30, title: "Разложение на множители", formula: "ax^2 + bx + c = a(x - x_1)(x - x_2)", desc: "Разложение квадратного трехчлена на линейные множители" },
+                    { number: 31, title: "Координаты вершины параболы", formula: "x_0 = -\\frac{b}{2a}, \\; y_0 = y(x_0) = -\\frac{D}{4a}", desc: "Координаты вершины параболы y = ax² + bx + c" },
+                    { number: 32, title: "Уравнение параболы в вершиной форме", formula: "y = a(x - m)^2 + n, \\; \\text{где } m = x_0, n = y_0", desc: "Форма записи квадратичной функции с выделением вершины" },
+                    { number: 33, title: "Условие касания оси Ox", formula: "D = 0 \\Rightarrow \\text{парабола касается оси Ox в точке } x = -\\frac{b}{2a}", desc: "Случай, когда дискриминант равен нулю" }
+                ]
+            },
+            combinatorics: {
+                title: "Комбинаторика и факториалы",
+                description: "Основные понятия комбинаторики: факториал, перестановки, размещения, сочетания",
+                formulas: [
+                    { number: 34, title: "Факториал",  formula: "n! = 1 \\cdot 2 \\cdot 3 \\cdot ... \\cdot n",  desc: "Произведение всех натуральных чисел от 1 до n", example: "5! = 1 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 = 120"  },
+                    { number: 35, title: "Факториал нуля", formula: "0! = 1", desc: "Факториал нуля по определению равен единице" },
+                    { number: 36, title: "Рекуррентная формула факториала", formula: "n! = n \\cdot (n-1)!", desc: "Связь факториала числа n с факториалом предыдущего числа",example: "6! = 6 \\cdot 5! = 6 \\cdot 120 = 720" },
+                    { number: 37, title: "Перестановки (без повторений)", formula: "P_n = n!", desc: "Количество способов переставить n различных элементов", example: "P_3 = 3! = 6" },
+                    { number: 38, title: "Перестановки с повторениями", formula: "P_n^{n_1, n_2, ..., n_k} = \\frac{n!}{n_1! \\cdot n_2! \\cdot ... \\cdot n_k!}", desc: "Где n = n₁ + n₂ + ... + nₖ — количество перестановок с повторениями", example: "Слово 'МАТЕМАТИКА': \\frac{10!}{2! \\cdot 3! \\cdot 2!}" },
+                    { number: 39, title: "Размещения (без повторений)", formula: "A_n^m = \\frac{n!}{(n-m)!}", desc: "Количество способов выбрать и упорядочить m элементов из n различных", example: "A_5^3 = \\frac{5!}{2!} = 60" },
+                    { number: 40, title: "Размещения с повторениями", formula: "\\overline{A}_n^m = n^m", desc: "Количество способов выбрать и упорядочить m элементов из n, где элементы могут повторяться", example: "\\overline{A}_3^2 = 3^2 = 9" },
+                    { number: 41,  title: "Сочетания (без повторений)", formula: "C_n^m = \\binom{n}{m} = \\frac{n!}{m! \\cdot (n-m)!}", desc: "Количество способов выбрать m элементов из n без учета порядка", example: "C_5^2 = \\frac{5!}{2! \\cdot 3!} = 10" },
+                    { number: 42,  title: "Сочетания с повторениями", formula: "\\overline{C}_n^m = C_{n+m-1}^m = \\frac{(n+m-1)!}{m! \\cdot (n-1)!}", desc: "Количество способов выбрать m элементов из n типов с повторениями", example: "\\overline{C}_3^2 = C_4^2 = 6" },
+                    { number: 43,  title: "Свойство симметрии сочетаний", formula: "C_n^m = C_n^{n-m}", desc: "Сочетания симметричны относительно середины", example: "C_7^2 = C_7^5" },
+                    { number: 44,  title: "Рекуррентная формула сочетаний", formula: "C_n^m = C_{n-1}^{m-1} + C_{n-1}^m", desc: "Каждое сочетание можно получить из предыдущих (треугольник Паскаля)", example: "C_5^2 = C_4^1 + C_4^2 = 4 + 6 = 10" },
+                    { number: 45, title: "Сумма сочетаний", formula: "\\sum_{k=0}^n C_n^k = 2^n", desc: "Сумма всех сочетаний для данного n равна 2ⁿ", example: "C_3^0 + C_3^1 + C_3^2 + C_3^3 = 1 + 3 + 3 + 1 = 8 = 2^3" },
+                    { number: 46, title: "Число подмножеств", formula: "|\\mathcal{P}(A)| = 2^n, \\; \\text{где } n = |A|", desc: "Количество всех подмножеств множества из n элементов", example: "У множества из 3 элементов 8 подмножеств" },
+                    { number: 47, title: "Биномиальные коэффициенты", formula: "C_n^m = \\binom{n}{m}", desc: "Обозначение сочетания как биномиального коэффициента" },
+                    { number: 48, title: "Биномиальные коэффициенты в комбинаторике", formula: "C_n^0 + C_n^1 + C_n^2 + \\ldots + C_n^n = 2^n", desc: "Сумма сочетаний равна числу всех подмножеств", example: "Для n=3: 1+3+3+1=8=2³" },
+                    { number: 49, title: "Тождество Вандермонда", formula: "C_{m+n}^k = \\sum_{i=0}^{k} C_m^i C_n^{k-i}", desc: "Свертка биномиальных коэффициентов", example: "C_{5+3}^2 = C_8^2 = 28 = C_5^0C_3^2 + C_5^1C_3^1 + C_5^2C_3^0 = 1·3 + 5·3 + 10·1 = 3+15+10=28" },
+                    { number: 50, title: "Биномиальный ряд", formula: "(1+x)^n = 1 + nx + \\frac{n(n-1)}{2!}x^2 + \\frac{n(n-1)(n-2)}{3!}x^3 + \\ldots", desc: "Разложение для целого n", example: "n=3: (1+x)^3 = 1 + 3x + 3x^2 + x^3" },
+                ]
+            },
+            progressions: {
+                title: "Арифметическая и геометрическая прогрессии",
+                description: "Формулы для вычисления членов, суммы и свойств прогрессий",
+                formulas: [
+                    { number: 51, title: "Определение арифметической прогрессии", formula: "a_{n+1} = a_n + d", desc: "Каждый следующий член отличается от предыдущего на разность d", example: "2, 5, 8, 11, ... \\; (d = 3)" },
+                    { number: 52, title: "n-й член арифметической прогрессии", formula: "a_n = a_1 + (n-1)d", desc: "Формула общего члена", example: "a_5 = 2 + (5-1)\\cdot3 = 14" },
+                    { number: 53, title: "Разность арифметической прогрессии", formula: "d = a_{n+1} - a_n = \\frac{a_n - a_1}{n-1}", desc: "Способы нахождения разности", example: "d = 8 - 5 = 3" },
+                    { number: 54, title: "Характеристическое свойство", formula: "a_n = \\frac{a_{n-1} + a_{n+1}}{2}", desc: "Каждый член равен среднему арифметическому соседних", example: "a_3 = \\frac{5 + 11}{2} = 8" },
+                    { number: 55, title: "Обобщенное свойство", formula: "a_n = \\frac{a_{n-k} + a_{n+k}}{2}", desc: "Для равноудаленных членов", example: "a_4 = \\frac{a_2 + a_6}{2}" },
+                    { number: 56, title: "Сумма n членов (I)", formula: "S_n = \\frac{a_1 + a_n}{2} \\cdot n", desc: "Сумма через первый и последний", example: "S_5 = \\frac{2 + 14}{2} \\cdot 5 = 40" },
+                    { number: 57, title: "Сумма n членов (II)", formula: "S_n = \\frac{2a_1 + (n-1)d}{2} \\cdot n", desc: "Сумма через первый член и разность", example: "S_5 = \\frac{2\\cdot2 + (5-1)\\cdot3}{2} \\cdot 5 = 40" },
+                    { number: 58, title: "Определение геометрической прогрессии", formula: "b_{n+1} = b_n \\cdot q", desc: "Каждый следующий член получается умножением на знаменатель q", example: "3, 6, 12, 24, ... \\; (q = 2)" },
+                    { number: 59, title: "n-й член геометрической прогрессии", formula: "b_n = b_1 \\cdot q^{n-1}", desc: "Формула общего члена", example: "b_5 = 3 \\cdot 2^{4} = 48" },
+                    { number: 60, title: "Знаменатель геометрической прогрессии", formula: "q = \\frac{b_{n+1}}{b_n} = \\sqrt[n-1]{\\frac{b_n}{b_1}}", desc: "Способы нахождения знаменателя", example: "q = \\frac{12}{6} = 2" },
+                    { number: 61, title: "Характеристическое свойство", formula: "b_n^2 = b_{n-1} \\cdot b_{n+1}", desc: "Каждый член (кроме крайних) есть среднее геометрическое соседних", example: "b_3^2 = 12^2 = 144 = 6 \\cdot 24" },
+                    { number: 62, title: "Обобщенное свойство", formula: "b_n^2 = b_{n-k} \\cdot b_{n+k}", desc: "Для равноудаленных членов", example: "b_4^2 = b_2 \\cdot b_6" },
+                    { number: 63, title: "Сумма n членов (q ≠ 1)", formula: "S_n = \\frac{b_1(q^n - 1)}{q - 1} = \\frac{b_n q - b_1}{q - 1}", desc: "Сумма первых n членов", example: "S_4 = \\frac{3(2^4 - 1)}{2 - 1} = 3 \\cdot 15 = 45" },
+                    { number: 64, title: "Сумма бесконечной убывающей прогрессии", formula: "S = \\frac{b_1}{1 - q}, \\; |q| < 1", desc: "Сумма всех членов при |q| < 1", example: "9, 3, 1, \\frac{1}{3}, ... \\; S = \\frac{9}{1 - \\frac{1}{3}} = 13.5" },
+                    { number: 65, title: "Связь арифметической и геометрической прогрессий", formula: "\\text{Если } a_n = \\log b_n, \\text{ то } b_n - \\text{геом. прогрессия}", desc: "Логарифмы членов геометрической прогрессии образуют арифметическую", example: "b_n = 2,4,8,16 \\Rightarrow a_n = \\log_2 b_n = 1,2,3,4" },
+                    { number: 66, title: "Сумма квадратов арифметической прогрессии", formula: "\\sum_{k=1}^n a_k^2 = \\frac{n(n+1)(2n+1)}{6}d^2 + na_1^2 + n(n-1)a_1 d", desc: "Для прогрессии с разностью d", example: "1,2,3,4: \\sum = 30" },
+                    { number: 67, title: "Произведение n членов геометрической прогрессии", formula: "P_n = (b_1 \\cdot b_n)^{n/2}", desc: "Произведение первых n членов", example: "2,4,8: P_3 = (2 \\cdot 8)^{3/2} = 16^{1.5} = 64" },
+                    { number: 68, title: "Сумма обратных величин арифметической прогрессии", formula: "\\sum_{k=1}^n \\frac{1}{a_k} = \\frac{1}{d} \\left( \\psi\\left(\\frac{a_1}{d} + n\\right) - \\psi\\left(\\frac{a_1}{d}\\right) \\right)", desc: "Через дигамма-функцию ψ(x)", example: "Для натурального ряда: \\sum_{k=1}^n \\frac{1}{k} = H_n" },
+                ]
+            },
+            trigonometry: {
+                title: "Тригонометрические формулы",
+                description: "Основные тригонометрические тождества, формулы сложения, двойного угла",
+                formulas: [
+                    { number: 69, title: "Основное тригонометрическое тождество", formula: "\\sin^2 \\alpha + \\cos^2 \\alpha = 1", desc: "Связь синуса и косинуса одного угла" },
+                    { number: 70, title: "Тангенс и котангенс", formula: "\\tan \\alpha = \\frac{\\sin \\alpha}{\\cos \\alpha}, \\quad \\cot \\alpha = \\frac{\\cos \\alpha}{\\sin \\alpha}", desc: "Определение тангенса и котангенса" },
+                    { number: 71, title: "Связь тангенса и котангенса", formula: "\\tan \\alpha \\cdot \\cot \\alpha = 1", desc: "Произведение тангенса и котангенса" },
+                    { number: 72, title: "Тангенс и косинус", formula: "\\tan^2 \\alpha + 1 = \\frac{1}{\\cos^2 \\alpha}", desc: "Связь тангенса и косинуса" },
+                    { number: 73, title: "Котангенс и синус", formula: "\\cot^2 \\alpha + 1 = \\frac{1}{\\sin^2 \\alpha}", desc: "Связь котангенса и синуса" },
+                    { number: 74, title: "Синус суммы", formula: "\\sin(\\alpha + \\beta) = \\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta", desc: "Синус суммы двух углов" },
+                    { number: 75, title: "Синус разности", formula: "\\sin(\\alpha - \\beta) = \\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta", desc: "Синус разности двух углов" },
+                    { number: 76, title: "Косинус суммы", formula: "\\cos(\\alpha + \\beta) = \\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta", desc: "Косинус суммы двух углов" },
+                    { number: 77, title: "Косинус разности", formula: "\\cos(\\alpha - \\beta) = \\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta", desc: "Косинус разности двух углов" },
+                    { number: 78, title: "Тангенс суммы", formula: "\\tan(\\alpha + \\beta) = \\frac{\\tan \\alpha + \\tan \\beta}{1 - \\tan \\alpha \\tan \\beta}", desc: "Тангенс суммы двух углов" },
+                    { number: 79, title: "Тангенс разности", formula: "\\tan(\\alpha - \\beta) = \\frac{\\tan \\alpha - \\tan \\beta}{1 + \\tan \\alpha \\tan \\beta}", desc: "Тангенс разности двух углов" },
+                    { number: 80, title: "Синус двойного угла", formula: "\\sin 2\\alpha = 2 \\sin \\alpha \\cos \\alpha", desc: "Синус двойного угла" },
+                    { number: 81, title: "Косинус двойного угла", formula: "\\cos 2\\alpha = \\cos^2 \\alpha - \\sin^2 \\alpha = 2\\cos^2 \\alpha - 1 = 1 - 2\\sin^2 \\alpha", desc: "Косинус двойного угла (три формы записи)" },
+                    { number: 82, title: "Тангенс двойного угла", formula: "\\tan 2\\alpha = \\frac{2\\tan \\alpha}{1 - \\tan^2 \\alpha}", desc: "Тангенс двойного угла" },
+                    { number: 83, title: "Котангенс двойного угла", formula: "\\cot 2\\alpha = \\frac{\\cot^2 \\alpha - 1}{2\\cot \\alpha}", desc: "Котангенс двойного угла" },
+                    { number: 84, title: "Синус тройного угла", formula: "\\sin 3\\alpha = 3\\sin \\alpha - 4\\sin^3 \\alpha", desc: "Синус тройного угла" },
+                    { number: 85, title: "Косинус тройного угла", formula: "\\cos 3\\alpha = 4\\cos^3 \\alpha - 3\\cos \\alpha", desc: "Косинус тройного угла" },
+                    { number: 86, title: "Понижение степени (синус)", formula: "\\sin^2 \\alpha = \\frac{1 - \\cos 2\\alpha}{2}", desc: "Формула понижения степени для синуса" },
+                    { number: 87, title: "Понижение степени (косинус)", formula: "\\cos^2 \\alpha = \\frac{1 + \\cos 2\\alpha}{2}", desc: "Формула понижения степени для косинуса" },
+                    { number: 88, title: "Сумма синусов", formula: "\\sin \\alpha + \\sin \\beta = 2 \\sin\\frac{\\alpha + \\beta}{2} \\cos\\frac{\\alpha - \\beta}{2}", desc: "Преобразование суммы синусов в произведение" },
+                    { number: 89, title: "Разность синусов", formula: "\\sin \\alpha - \\sin \\beta = 2 \\sin\\frac{\\alpha - \\beta}{2} \\cos\\frac{\\alpha + \\beta}{2}", desc: "Преобразование разности синусов в произведение" },
+                    { number: 90, title: "Сумма косинусов", formula: "\\cos \\alpha + \\cos \\beta = 2 \\cos\\frac{\\alpha + \\beta}{2} \\cos\\frac{\\alpha - \\beta}{2}", desc: "Преобразование суммы косинусов в произведение" },
+                    { number: 91, title: "Разность косинусов", formula: "\\cos \\alpha - \\cos \\beta = -2 \\sin\\frac{\\alpha + \\beta}{2} \\sin\\frac{\\alpha - \\beta}{2}", desc: "Преобразование разности косинусов в произведение" },
+                    { number: 92, title: "Произведение синусов", formula: "\\sin \\alpha \\sin \\beta = \\frac{1}{2}[\\cos(\\alpha - \\beta) - \\cos(\\alpha + \\beta)]", desc: "Преобразование произведения синусов в сумму" },
+                    { number: 93, title: "Произведение косинусов", formula: "\\cos \\alpha \\cos \\beta = \\frac{1}{2}[\\cos(\\alpha - \\beta) + \\cos(\\alpha + \\beta)]", desc: "Преобразование произведения косинусов в сумму" },
+                    { number: 94, title: "Произведение синуса на косинус", formula: "\\sin \\alpha \\cos \\beta = \\frac{1}{2}[\\sin(\\alpha + \\beta) + \\sin(\\alpha - \\beta)]", desc: "Преобразование произведения синуса и косинуса в сумму" },
+                    { number: 95, title: "Формулы половинного угла", formula: "\\sin\\frac{\\alpha}{2} = \\pm \\sqrt{\\frac{1 - \\cos \\alpha}{2}}, \\quad \\cos\\frac{\\alpha}{2} = \\pm \\sqrt{\\frac{1 + \\cos \\alpha}{2}}", desc: "Синус и косинус половинного угла" },
+                    { number: 96, title: "Тангенс половинного угла", formula: "\\tan\\frac{\\alpha}{2} = \\frac{\\sin \\alpha}{1 + \\cos \\alpha} = \\frac{1 - \\cos \\alpha}{\\sin \\alpha}", desc: "Тангенс половинного угла" }
+                ]
+            },
+            trig_equations: {
+                title: "Тригонометрические уравнения",
+                description: "Формулы для решения простейших тригонометрических уравнений и частные случаи",
+                formulas: [
+                    { number: 120, title: "Уравнение sin x = a", formula: "x = (-1)^n \\arcsin a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Общее решение при |a| ≤ 1", example: "\\sin x = \\frac{1}{2} \\Rightarrow x = (-1)^n \\frac{\\pi}{6} + \\pi n" },
+                    { number: 121, title: "Уравнение cos x = a", formula: "x = \\pm \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Общее решение при |a| ≤ 1", example: "\\cos x = \\frac{\\sqrt{2}}{2} \\Rightarrow x = \\pm \\frac{\\pi}{4} + 2\\pi n" },
+                    { number: 122, title: "Уравнение tg x = a", formula: "x = \\arctan a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Общее решение для любого a", example: "\\tan x = 1 \\Rightarrow x = \\frac{\\pi}{4} + \\pi n" },
+                    { number: 123, title: "Уравнение cot x = a", formula: "x = \\arccot a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Общее решение для любого a", example: "\\cot x = \\sqrt{3} \\Rightarrow x = \\frac{\\pi}{6} + \\pi n" },
+                    { number: 124, title: "Частный случай: sin x = 0", formula: "x = \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения sin x = 0", example: "\\sin x = 0 \\Rightarrow x = 0, \\pm \\pi, \\pm 2\\pi, ..." },
+                    { number: 125, title: "Частный случай: sin x = 1", formula: "x = \\frac{\\pi}{2} + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения sin x = 1", example: "\\sin x = 1 \\Rightarrow x = \\frac{\\pi}{2}, \\frac{\\pi}{2} + 2\\pi, ..." },
+                    { number: 126, title: "Частный случай: sin x = -1", formula: "x = \\frac{3\\pi}{2} + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения sin x = -1", example: "\\sin x = -1 \\Rightarrow x = \\frac{3\\pi}{2}, \\frac{3\\pi}{2} + 2\\pi, ..." },
+                    { number: 127, title: "Частный случай: cos x = 0", formula: "x = \\frac{\\pi}{2} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cos x = 0", example: "\\cos x = 0 \\Rightarrow x = \\frac{\\pi}{2}, \\frac{\\pi}{2} + \\pi, ..." },
+                    { number: 128, title: "Частный случай: cos x = 1", formula: "x = 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cos x = 1", example: "\\cos x = 1 \\Rightarrow x = 2\\pi, 2\\pi + 2\\pi, ..." },
+                    { number: 129, title: "Частный случай: cos x = -1", formula: "x = \\pi + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cos x = -1", example: "\\cos x = -1 \\Rightarrow x = \\pi, \\pi + 2\\pi, ..." },
+                    { number: 130, title: "Частный случай: tan x = 0", formula: "x = \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения tan x = 0", example: "\\tan x = 0 \\Rightarrow x = \\pi n" },
+                    { number: 131, title: "Частный случай: tan x = 1", formula: "x = \\frac{\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения tan x = 1", example: "\\tan x = 1 \\Rightarrow x = \\frac{\\pi}{4}, \\frac{\\pi}{4} + \\pi, ..." },
+                    { number: 132, title: "Частный случай: tan x = -1", formula: "x = \\frac{3\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения tan x = -1", example: "\\tan x = -1 \\Rightarrow x = \\frac{3\\pi}{4}, \\frac{3\\pi}{4} + \\pi, ..." },
+                    { number: 133, title: "Частный случай: cot x = 0", formula: "x = \\frac{\\pi}{2} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cot x = 0", example: "\\cot x = 0 \\Rightarrow x = \\frac{\\pi}{2}, \\frac{\\pi}{2} + \\pi, ..." },
+                    { number: 134, title: "Частный случай: cot x = 1", formula: "x = \\frac{\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cot x = 1", example: "\\cot x = 1 \\Rightarrow x = \\frac{\\pi}{4}, \\frac{\\pi}{4} + \\pi, ..." },
+                    { number: 135, title: "Частный случай: cot x = -1", formula: "x = \\frac{3\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения cot x = -1", example: "\\cot x = -1 \\Rightarrow x = \\frac{3\\pi}{4}, \\frac{3\\pi}{4} + \\pi, ..." },
+                    { number: 136, title: "Частный случай: sin x = 1", formula: "x = \\frac{\\pi}{2} + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение уравнения sin x = 1", example: "\\sin x = 1 \\Rightarrow x = \\frac{\\pi}{2}, \\frac{\\pi}{2} + 2\\pi, ..." },
+                ]
+            },    
+            trig_inequalities: {
+                title: "Тригонометрические неравенства",
+                description: "Методы решения простейших тригонометрических неравенств",
+                formulas: [
+                    { number: 150, title: "Неравенство sin x > a", formula: "\\arcsin a + 2\\pi n < x < \\pi - \\arcsin a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение при |a| < 1", example: "\\sin x > \\frac{1}{2} \\Rightarrow \\frac{\\pi}{6} + 2\\pi n < x < \\frac{5\\pi}{6} + 2\\pi n" },
+                    { number: 151, title: "Неравенство sin x < a", formula: "-\\pi - \\arcsin a + 2\\pi n < x < \\arcsin a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение при |a| < 1", example: "\\sin x < \\frac{1}{2} \\Rightarrow -\\frac{7\\pi}{6} + 2\\pi n < x < \\frac{\\pi}{6} + 2\\pi n" },
+                    { number: 152, title: "Неравенство cos x > a", formula: "-\\arccos a + 2\\pi n < x < \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение при |a| < 1", example: "\\cos x > \\frac{1}{2} \\Rightarrow -\\frac{\\pi}{3} + 2\\pi n < x < \\frac{\\pi}{3} + 2\\pi n" },
+                    { number: 153, title: "Неравенство cos x < a", formula: "\\arccos a + 2\\pi n < x < 2\\pi - \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение при |a| < 1", example: "\\cos x < \\frac{1}{2} \\Rightarrow \\frac{\\pi}{3} + 2\\pi n < x < \\frac{5\\pi}{3} + 2\\pi n" },
+                    { number: 154, title: "Неравенство tan x > a", formula: "\\arctan a + \\pi n < x < \\frac{\\pi}{2} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение для любого a", example: "\\tan x > 1 \\Rightarrow \\frac{\\pi}{4} + \\pi n < x < \\frac{\\pi}{2} + \\pi n" },
+                    { number: 155, title: "Неравенство tan x < a", formula: "-\\frac{\\pi}{2} + \\pi n < x < \\arctan a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение для любого a", example: "\\tan x < 1 \\Rightarrow -\\frac{\\pi}{2} + \\pi n < x < \\frac{\\pi}{4} + \\pi n" },
+                    { number: 156, title: "Неравенство cot x > a", formula: "\\pi n < x < \\text{arccot} \\, a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение для любого a", example: "\\cot x > 1 \\Rightarrow \\pi n < x < \\frac{\\pi}{4} + \\pi n" },
+                    { number: 157, title: "Неравенство cot x < a", formula: "\\text{arccot} \\, a + \\pi n < x < \\pi + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Решение для любого a", example: "\\cot x < 1 \\Rightarrow \\frac{\\pi}{4} + \\pi n < x < \\pi + \\pi n" },
+                    { number: 158, title: "Неравенство sin x ≥ a", formula: "\\arcsin a + 2\\pi n \\leq x \\leq \\pi - \\arcsin a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство", example: "\\sin x \\geq \\frac{1}{2} \\Rightarrow \\frac{\\pi}{6} + 2\\pi n \\leq x \\leq \\frac{5\\pi}{6} + 2\\pi n" },
+                    { number: 159, title: "Неравенство sin x ≤ a", formula: "-\\pi - \\arcsin a + 2\\pi n \\leq x \\leq \\arcsin a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство", example: "\\sin x \\leq \\frac{1}{2} \\Rightarrow -\\frac{7\\pi}{6} + 2\\pi n \\leq x \\leq \\frac{\\pi}{6} + 2\\pi n" },
+                    { number: 160, title: "Неравенство cos x ≥ a", formula: "-\\arccos a + 2\\pi n \\leq x \\leq \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство", example: "\\cos x \\geq \\frac{1}{2} \\Rightarrow -\\frac{\\pi}{3} + 2\\pi n \\leq x \\leq \\frac{\\pi}{3} + 2\\pi n" },
+                    { number: 161, title: "Неравенство cos x ≤ a", formula: "\\arccos a + 2\\pi n \\leq x \\leq 2\\pi - \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство", example: "\\cos x \\leq \\frac{1}{2} \\Rightarrow \\frac{\\pi}{3} + 2\\pi n \\leq x \\leq \\frac{5\\pi}{3} + 2\\pi n" },
+                    { number: 162, title: "Неравенство tan x ≥ a", formula: "\\arctan a + \\pi n \\leq x < \\frac{\\pi}{2} + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство (с учетом области определения)", example: "\\tan x \\geq 1 \\Rightarrow \\frac{\\pi}{4} + \\pi n \\leq x < \\frac{\\pi}{2} + \\pi n" },
+                    { number: 163, title: "Неравенство tan x ≤ a", formula: "-\\frac{\\pi}{2} + \\pi n < x \\leq \\arctan a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство (с учетом области определения)", example: "\\tan x \\leq 1 \\Rightarrow -\\frac{\\pi}{2} + \\pi n < x \\leq \\frac{\\pi}{4} + \\pi n" },
+                    { number: 164, title: "Неравенство cot x ≥ a", formula: "\\pi n < x \\leq \\text{arccot} \\, a + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство (с учетом области определения)", example: "\\cot x \\geq 1 \\Rightarrow \\pi n < x \\leq \\frac{\\pi}{4} + \\pi n" },
+                    { number: 165, title: "Неравенство cot x ≤ a", formula: "\\text{arccot} \\, a + \\pi n \\leq x < \\pi + \\pi n, \\; n \\in \\mathbb{Z}", desc: "Нестрогое неравенство (с учетом области определения)", example: "\\cot x \\leq 1 \\Rightarrow \\frac{\\pi}{4} + \\pi n \\leq x < \\pi + \\pi n" },
+                    { number: 166, title: "Система тригонометрических неравенств", formula: "\\begin{cases} \\sin x > a \\\\ \\cos x < b \\end{cases}", desc: "Решение находится как пересечение промежутков", example: "\\begin{cases} \\sin x > \\frac{1}{2} \\\\ \\cos x < \\frac{1}{2} \\end{cases} \\Rightarrow x \\in \\left(\\frac{\\pi}{3} + 2\\pi n, \\frac{5\\pi}{6} + 2\\pi n\\right)" },
+                    { number: 167, title: "Двойное неравенство с синусом", formula: "a < \\sin x < b \\Rightarrow \\begin{cases} \\sin x > a \\\\ \\sin x < b \\end{cases}", desc: "Сводится к системе неравенств", example: "\\frac{1}{2} < \\sin x < \\frac{\\sqrt{3}}{2} \\Rightarrow x \\in \\left(\\frac{\\pi}{6} + 2\\pi n, \\frac{\\pi}{3} + 2\\pi n\\right) \\cup \\left(\\frac{2\\pi}{3} + 2\\pi n, \\frac{5\\pi}{6} + 2\\pi n\\right)" },
+                    { number: 168, title: "Двойное неравенство с косинусом", formula: "a < \\cos x < b \\Rightarrow \\begin{cases} \\cos x > a \\\\ \\cos x < b \\end{cases}", desc: "Сводится к системе неравенств", example: "-\\frac{1}{2} < \\cos x < \\frac{1}{2} \\Rightarrow x \\in \\left(\\frac{\\pi}{3} + 2\\pi n, \\frac{2\\pi}{3} + 2\\pi n\\right) \\cup \\left(\\frac{4\\pi}{3} + 2\\pi n, \\frac{5\\pi}{3} + 2\\pi n\\right)" }
+                ]
+            },
+            plane_geometry: {
+                title: "Планиметрия (треугольники, четырехугольники)",
+                description: "Формулы для вычисления площадей, сторон, углов и других элементов плоских фигур",
+                formulas: [
+            { 
+                number: 170, 
+                title: "Площадь треугольника (через основание и высоту)", 
+                formula: "S = \\frac{1}{2} a h_a", 
+                desc: "Половина произведения стороны на высоту, проведенную к этой стороне",
+                example: "a = 10,\\; h = 6 \\Rightarrow S = \\frac{1}{2} \\cdot 10 \\cdot 6 = 30" 
+            },
+            { 
+                number: 171, 
+                title: "Площадь треугольника (формула Герона)", 
+                formula: "S = \\sqrt{p(p-a)(p-b)(p-c)}, \\; p = \\frac{a+b+c}{2}", 
+                desc: "Площадь через полупериметр и стороны",
+                example: "a=3,\\; b=4,\\; c=5 \\Rightarrow p=6,\\; S = \\sqrt{6\\cdot3\\cdot2\\cdot1} = 6" 
+            },
+            { 
+                number: 172, 
+                title: "Площадь треугольника (через две стороны и угол)", 
+                formula: "S = \\frac{1}{2} ab \\sin \\gamma", 
+                desc: "Половина произведения сторон на синус угла между ними",
+                example: "a=5,\\; b=6,\\; \\gamma = 30^\\circ \\Rightarrow S = \\frac{1}{2} \\cdot 5 \\cdot 6 \\cdot \\frac{1}{2} = 7.5" 
+            },
+            { 
+                number: 173, 
+                title: "Площадь треугольника (через радиус вписанной окружности)", 
+                formula: "S = p \\cdot r", 
+                desc: "Произведение полупериметра на радиус вписанной окружности",
+                example: "p=12,\\; r=3 \\Rightarrow S = 36" 
+            },
+            { 
+                number: 174, 
+                title: "Площадь треугольника (через радиус описанной окружности)", 
+                formula: "S = \\frac{abc}{4R}", 
+                desc: "Произведение сторон, деленное на четыре радиуса описанной окружности",
+                example: "a=3,\\; b=4,\\; c=5,\\; R=2.5 \\Rightarrow S = \\frac{3\\cdot4\\cdot5}{4\\cdot2.5} = 6" 
+            },
+            { 
+                number: 175, 
+                title: "Теорема синусов", 
+                formula: "\\frac{a}{\\sin \\alpha} = \\frac{b}{\\sin \\beta} = \\frac{c}{\\sin \\gamma} = 2R", 
+                desc: "Отношение стороны к синусу противолежащего угла равно диаметру описанной окружности",
+                example: "a=6,\\; \\alpha=30^\\circ \\Rightarrow 2R = \\frac{6}{\\sin 30^\\circ} = 12 \\Rightarrow R=6" 
+            },
+            { 
+                number: 176, 
+                title: "Теорема косинусов", 
+                formula: "a^2 = b^2 + c^2 - 2bc \\cos \\alpha", 
+                desc: "Квадрат стороны равен сумме квадратов двух других сторон минус удвоенное произведение на косинус угла между ними",
+                example: "b=4,\\; c=5,\\; \\alpha=60^\\circ \\Rightarrow a^2 = 16+25-2\\cdot4\\cdot5\\cdot\\frac{1}{2} = 41-20=21 \\Rightarrow a=\\sqrt{21}" 
+            },
+            { 
+                number: 177, 
+                title: "Теорема Пифагора", 
+                formula: "c^2 = a^2 + b^2", 
+                desc: "В прямоугольном треугольнике квадрат гипотенузы равен сумме квадратов катетов",
+                example: "a=3,\\; b=4 \\Rightarrow c = \\sqrt{9+16} = 5" 
+            },
+            { 
+                number: 178, 
+                title: "Высота в прямоугольном треугольнике", 
+                formula: "h_c = \\frac{ab}{c}", 
+                desc: "Высота, опущенная на гипотенузу, равна произведению катетов, деленному на гипотенузу",
+                example: "a=3,\\; b=4,\\; c=5 \\Rightarrow h = \\frac{3\\cdot4}{5} = 2.4" 
+            },
+            { 
+                number: 179, 
+                title: "Проекции катетов на гипотенузу", 
+                formula: "a_c = \\frac{a^2}{c}, \\; b_c = \\frac{b^2}{c}", 
+                desc: "Проекции катетов на гипотенузу",
+                example: "a=3,\\; b=4,\\; c=5 \\Rightarrow a_c = \\frac{9}{5}=1.8,\\; b_c = \\frac{16}{5}=3.2" 
+            },
+            { 
+                number: 180, 
+                title: "Медиана треугольника", 
+                formula: "m_a = \\frac{1}{2}\\sqrt{2b^2 + 2c^2 - a^2}", 
+                desc: "Длина медианы, проведенной к стороне a",
+                example: "a=6,\\; b=5,\\; c=5 \\Rightarrow m_a = \\frac{1}{2}\\sqrt{2\\cdot25+2\\cdot25-36} = \\frac{1}{2}\\sqrt{64}=4" 
+            },
+            { 
+                number: 181, 
+                title: "Биссектриса треугольника", 
+                formula: "l_a = \\frac{2bc \\cos\\frac{\\alpha}{2}}{b+c}", 
+                desc: "Длина биссектрисы, проведенной из угла α",
+                example: "b=5,\\; c=7,\\; \\alpha=60^\\circ \\Rightarrow l_a = \\frac{2\\cdot5\\cdot7\\cdot\\cos30^\\circ}{12} = \\frac{70\\cdot0.866}{12} \\approx 5.05" 
+            },
+            { 
+                number: 182, 
+                title: "Свойство биссектрисы", 
+                formula: "\\frac{BD}{DC} = \\frac{AB}{AC}", 
+                desc: "Биссектриса делит противоположную сторону на отрезки, пропорциональные прилежащим сторонам",
+                example: "AB=5,\\; AC=7,\\; BC=12 \\Rightarrow BD:DC = 5:7 \\Rightarrow BD=5,\\; DC=7" 
+            },
+            { 
+                number: 183, 
+                title: "Радиус вписанной окружности (треугольник)", 
+                formula: "r = \\frac{S}{p}", 
+                desc: "Радиус окружности, вписанной в треугольник",
+                example: "S=24,\\; p=12 \\Rightarrow r=2" 
+            },
+            { 
+                number: 184, 
+                title: "Радиус описанной окружности (треугольник)", 
+                formula: "R = \\frac{abc}{4S}", 
+                desc: "Радиус окружности, описанной около треугольника",
+                example: "a=3,\\; b=4,\\; c=5,\\; S=6 \\Rightarrow R = \\frac{3\\cdot4\\cdot5}{4\\cdot6} = \\frac{60}{24}=2.5" 
+            },
+            { 
+                number: 185, 
+                title: "Площадь прямоугольника", 
+                formula: "S = a \\cdot b", 
+                desc: "Произведение длины на ширину",
+                example: "a=5,\\; b=8 \\Rightarrow S = 40" 
+            },
+            { 
+                number: 186, 
+                title: "Диагональ прямоугольника", 
+                formula: "d = \\sqrt{a^2 + b^2}", 
+                desc: "Диагональ через стороны",
+                example: "a=3,\\; b=4 \\Rightarrow d = 5" 
+            },
+            { 
+                number: 187, 
+                title: "Площадь квадрата", 
+                formula: "S = a^2 = \\frac{d^2}{2}", 
+                desc: "Площадь через сторону или диагональ",
+                example: "a=6 \\Rightarrow S=36,\\; d=6\\sqrt{2} \\Rightarrow S=36" 
+            },
+            { 
+                number: 188, 
+                title: "Площадь параллелограмма", 
+                formula: "S = a h_a = a b \\sin \\alpha", 
+                desc: "Произведение стороны на высоту или двух сторон на синус угла",
+                example: "a=8,\\; h=5 \\Rightarrow S=40" 
+            },
+            { 
+                number: 189, 
+                title: "Площадь параллелограмма (через диагонали)", 
+                formula: "S = \\frac{1}{2} d_1 d_2 \\sin \\varphi", 
+                desc: "Половина произведения диагоналей на синус угла между ними",
+                example: "d_1=6,\\; d_2=8,\\; \\varphi=90^\\circ \\Rightarrow S = \\frac{1}{2}\\cdot48\\cdot1 = 24" 
+            },
+            { 
+                number: 190, 
+                title: "Площадь ромба", 
+                formula: "S = a h = a^2 \\sin \\alpha = \\frac{1}{2} d_1 d_2", 
+                desc: "Несколько способов вычисления площади ромба",
+                example: "d_1=6,\\; d_2=8 \\Rightarrow S = \\frac{1}{2}\\cdot48 = 24" 
+            },
+            { 
+                number: 191, 
+                title: "Сторона ромба через диагонали", 
+                formula: "a = \\frac{1}{2}\\sqrt{d_1^2 + d_2^2}", 
+                desc: "Сторона ромба через диагонали (диагонали перпендикулярны)",
+                example: "d_1=6,\\; d_2=8 \\Rightarrow a = \\frac{1}{2}\\sqrt{36+64} = \\frac{1}{2}\\sqrt{100}=5" 
+            },
+            { 
+                number: 192, 
+                title: "Площадь трапеции", 
+                formula: "S = \\frac{a+b}{2} \\cdot h", 
+                desc: "Произведение полусуммы оснований на высоту",
+                example: "a=5,\\; b=9,\\; h=4 \\Rightarrow S = \\frac{14}{2}\\cdot4 = 28" 
+            },
+            { 
+                number: 193, 
+                title: "Средняя линия трапеции", 
+                formula: "m = \\frac{a+b}{2}", 
+                desc: "Средняя линия равна полусумме оснований",
+                example: "a=5,\\; b=9 \\Rightarrow m=7" 
+            },
+            { 
+                number: 194, 
+                title: "Площадь трапеции (через среднюю линию)", 
+                formula: "S = m \\cdot h", 
+                desc: "Произведение средней линии на высоту",
+                example: "m=7,\\; h=4 \\Rightarrow S = 28" 
+            },
+            { 
+                number: 195, 
+                title: "Площадь произвольного четырехугольника", 
+                formula: "S = \\frac{1}{2} d_1 d_2 \\sin \\varphi", 
+                desc: "Половина произведения диагоналей на синус угла между ними",
+                example: "d_1=6,\\; d_2=8,\\; \\varphi=60^\\circ \\Rightarrow S = \\frac{1}{2}\\cdot48\\cdot\\frac{\\sqrt{3}}{2} = 12\\sqrt{3}" 
+            },
+            { 
+                number: 196, 
+                title: "Свойство вписанного четырехугольника", 
+                formula: "\\alpha + \\gamma = \\beta + \\delta = 180^\\circ", 
+                desc: "Сумма противоположных углов вписанного четырехугольника равна 180°",
+                example: "\\alpha=70^\\circ \\Rightarrow \\gamma=110^\\circ" 
+            },
+            { 
+                number: 197, 
+                title: "Теорема Птолемея", 
+                formula: "AC \\cdot BD = AB \\cdot CD + BC \\cdot AD", 
+                desc: "Произведение диагоналей вписанного четырехугольника равно сумме произведений противоположных сторон",
+                example: "AB=3,\\; BC=4,\\; CD=5,\\; AD=6 \\Rightarrow AC\\cdot BD = 3\\cdot5 + 4\\cdot6 = 15+24=39" 
+            },
+            { 
+                number: 198, 
+                title: "Свойство описанного четырехугольника", 
+                formula: "a + c = b + d", 
+                desc: "Суммы противоположных сторон описанного четырехугольника равны",
+                example: "a=5,\\; b=7,\\; c=9 \\Rightarrow d = a+c-b = 5+9-7=7" 
+            },
+            { 
+                number: 199, 
+                title: "Площадь прямоугольной трапеции", 
+                formula: "S = \\frac{a+b}{2} \\cdot h = m \\cdot h", 
+                desc: "Та же формула, что и для обычной трапеции",
+                example: "a=4,\\; b=8,\\; h=5 \\Rightarrow S = \\frac{12}{2}\\cdot5 = 30" 
+            },
+            { 
+                number: 200, 
+                title: "Высота равнобедренной трапеции", 
+                formula: "h = \\sqrt{c^2 - \\left(\\frac{b-a}{2}\\right)^2}", 
+                desc: "Высота через боковую сторону и разность оснований",
+                example: "a=6,\\; b=10,\\; c=5 \\Rightarrow h = \\sqrt{25 - \\left(\\frac{4}{2}\\right)^2} = \\sqrt{25-4} = \\sqrt{21} \\approx 4.58" 
+            }
+        ]
+    },
+            derivatives: {
+                title: "Производная и ее применение",
+                description: "Правила дифференцирования, таблица производных, геометрический смысл",
+                formulas: [
+                    { number: 62, title: "Определение производной", formula: "f'(x) = \\lim_{\\Delta x \\to 0} \\frac{f(x + \\Delta x) - f(x)}{\\Delta x}", desc: "Производная как предел отношения приращений" },
+                    { number: 63, title: "Геометрический смысл производной", formula: "f'(x_0) = \\tg \\alpha = k_{\\text{кас}}", desc: "Производная в точке равна тангенсу угла наклона касательной" },
+                    { number: 64, title: "Уравнение касательной", formula: "y = f(x_0) + f'(x_0)(x - x_0)", desc: "Уравнение касательной к графику функции в точке x₀" },
+                    { number: 65, title: "Физический смысл производной", formula: "v(t) = s'(t), \\quad a(t) = v'(t) = s''(t)", desc: "Скорость - производная пути, ускорение - производная скорости" },
+                    { number: 66, title: "Производная константы", formula: "C' = 0", desc: "Производная постоянной равна нулю" },
+                    { number: 67, title: "Производная x", formula: "x' = 1", desc: "Производная переменной" },
+                    { number: 68, title: "Производная суммы", formula: "(u \\pm v)' = u' \\pm v'", desc: "Производная суммы/разности функций" },
+                    { number: 69, title: "Производная произведения", formula: "(uv)' = u'v + uv'", desc: "Производная произведения двух функций" },
+                    { number: 70, title: "Производная частного", formula: "\\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}", desc: "Производная дроби (v ≠ 0)" },
+                    { number: 71, title: "Производная сложной функции", formula: "(f(g(x)))' = f'(g(x)) \\cdot g'(x)", desc: "Правило дифференцирования сложной функции" },
+                    { number: 72, title: "Производная степенной функции", formula: "(x^n)' = n \\cdot x^{n-1}", desc: "Производная x в степени n", example: "(x^5)' = 5x^4" },
+                    { number: 73, title: "Производная квадратного корня", formula: "(\\sqrt{x})' = \\frac{1}{2\\sqrt{x}}", desc: "Производная квадратного корня", example: "(\\sqrt{x})' = \\frac{1}{2\\sqrt{x}}" },
+                    { number: 74, title: "Производная синуса", formula: "(\\sin x)' = \\cos x", desc: "Производная синуса" },
+                    { number: 75, title: "Производная косинуса", formula: "(\\cos x)' = -\\sin x", desc: "Производная косинуса" },
+                    { number: 76, title: "Производная тангенса", formula: "(\\tan x)' = \\frac{1}{\\cos^2 x}", desc: "Производная тангенса" },
+                    { number: 77, title: "Производная котангенса", formula: "(\\cot x)' = -\\frac{1}{\\sin^2 x}", desc: "Производная котангенса" },
+                    { number: 78, title: "Производная экспоненты", formula: "(e^x)' = e^x", desc: "Производная экспоненты" },
+                    { number: 79, title: "Производная показательной функции", formula: "(a^x)' = a^x \\ln a", desc: "Производная показательной функции" },
+                    { number: 80, title: "Производная натурального логарифма", formula: "(\\ln x)' = \\frac{1}{x}", desc: "Производная натурального логарифма" },
+                    { number: 81, title: "Производная логарифма", formula: "(\\log_a x)' = \\frac{1}{x \\ln a}", desc: "Производная логарифма по основанию a" },
+                    { number: 82, title: "Производная арксинуса", formula: "(\\arcsin x)' = \\frac{1}{\\sqrt{1 - x^2}}", desc: "Производная арксинуса" },
+                    { number: 83, title: "Производная арккосинуса", formula: "(\\arccos x)' = -\\frac{1}{\\sqrt{1 - x^2}}", desc: "Производная арккосинуса" },
+                    { number: 84, title: "Производная арктангенса", formula: "(\\arctan x)' = \\frac{1}{1 + x^2}", desc: "Производная арктангенса" }
+                ]
+            },
+            circle: {
+                title: "Окружность и круг",
+                description: "Формулы для вычисления длины окружности, площади круга, дуги, сектора, сегмента и углов в окружности",
+                formulas: [
+                    { 
+                        number: 210, 
+                        title: "Длина окружности", 
+                        formula: "C = 2\\pi R", 
+                        desc: "○ Длина окружности через радиус",
+                        example: "R = 5 \\Rightarrow C = 2\\pi \\cdot 5 = 10\\pi \\approx 31.42" 
+                    },
+                    { 
+                        number: 211, 
+                        title: "Длина окружности (через диаметр)", 
+                        formula: "C = \\pi D", 
+                        desc: "○ Длина окружности через диаметр",
+                        example: "D = 10 \\Rightarrow C = 10\\pi \\approx 31.42" 
+                    },
+                    { 
+                        number: 212, 
+                        title: "Площадь круга", 
+                        formula: "S = \\pi R^2", 
+                        desc: "○ Площадь круга через радиус",
+                        example: "R = 5 \\Rightarrow S = \\pi \\cdot 25 = 25\\pi \\approx 78.54" 
+                    },
+                    { 
+                        number: 213, 
+                        title: "Площадь круга (через диаметр)", 
+                        formula: "S = \\frac{\\pi D^2}{4}", 
+                        desc: "○ Площадь круга через диаметр",
+                        example: "D = 10 \\Rightarrow S = \\frac{100\\pi}{4} = 25\\pi \\approx 78.54" 
+                    },
+                    { 
+                        number: 214, 
+                        title: "Длина дуги окружности", 
+                        formula: "l = \\frac{\\pi R \\alpha}{180^\\circ} = R \\alpha_{\\text{рад}}", 
+                        desc: "○ Длина дуги через центральный угол (в градусах или радианах)",
+                        example: "R = 5,\\; \\alpha = 60^\\circ \\Rightarrow l = \\frac{\\pi \\cdot 5 \\cdot 60}{180} = \\frac{300\\pi}{180} = \\frac{5\\pi}{3} \\approx 5.24" 
+                    },
+                    { 
+                        number: 215, 
+                        title: "Площадь сектора", 
+                        formula: "S_{\\text{сек}} = \\frac{\\pi R^2 \\alpha}{360^\\circ} = \\frac{1}{2} R^2 \\alpha_{\\text{рад}}", 
+                        desc: "○ Площадь сектора через центральный угол",
+                        example: "R = 5,\\; \\alpha = 60^\\circ \\Rightarrow S = \\frac{\\pi \\cdot 25 \\cdot 60}{360} = \\frac{1500\\pi}{360} = \\frac{25\\pi}{6} \\approx 13.09" 
+                    },
+                    { 
+                        number: 216, 
+                        title: "Площадь сегмента (α < 180°)", 
+                        formula: "S_{\\text{сег}} = \\frac{\\pi R^2 \\alpha}{360^\\circ} - \\frac{1}{2} R^2 \\sin \\alpha", 
+                        desc: "○ Площадь сегмента (сектор минус треугольник)",
+                        example: "R = 5,\\; \\alpha = 60^\\circ \\Rightarrow S = \\frac{25\\pi}{6} - \\frac{1}{2} \\cdot 25 \\cdot \\frac{\\sqrt{3}}{2} = \\frac{25\\pi}{6} - \\frac{25\\sqrt{3}}{4} \\approx 13.09 - 10.83 = 2.26" 
+                    },
+                    { 
+                        number: 217, 
+                        title: "Площадь сегмента (α > 180°)", 
+                        formula: "S_{\\text{сег}} = \\frac{\\pi R^2 \\alpha}{360^\\circ} + \\frac{1}{2} R^2 \\sin (360^\\circ - \\alpha)", 
+                        desc: "○ Площадь сегмента (сектор плюс треугольник)",
+                        example: "R = 5,\\; \\alpha = 240^\\circ \\Rightarrow S = \\frac{25\\pi \\cdot 240}{360} + \\frac{1}{2} \\cdot 25 \\cdot \\sin 120^\\circ = \\frac{50\\pi}{3} + \\frac{25\\sqrt{3}}{4} \\approx 52.36 + 10.83 = 63.19" 
+                    },
+                    { 
+                        number: 218, 
+                        title: "Вписанный угол", 
+                        formula: "\\angle ABC = \\frac{1}{2} \\angle AOC", 
+                        desc: "○ Вписанный угол равен половине центрального угла, опирающегося на ту же дугу",
+                        example: "∠AOC = 60° ⇒ ∠ABC = 30°" 
+                    },
+                    { 
+                        number: 219, 
+                        title: "Вписанный угол, опирающийся на диаметр", 
+                        formula: "\\angle ABC = 90^\\circ", 
+                        desc: "○ Вписанный угол, опирающийся на диаметр, — прямой",
+                        example: "AC — диаметр ⇒ ∠ABC = 90°" 
+                    },
+                    { 
+                        number: 220, 
+                        title: "Угол между хордами", 
+                        formula: "\\angle AED = \\frac{1}{2} (\\overparen{AD} + \\overparen{BC})", 
+                        desc: "○ Угол между пересекающимися хордами равен полусумме дуг, заключенных между ними",
+                        example: "AD = 80°, BC = 40° ⇒ ∠AED = 60°" 
+                    },
+                    { 
+                        number: 221, 
+                        title: "Угол между секущими", 
+                        formula: "\\angle AKB = \\frac{1}{2} (\\overparen{AB} - \\overparen{CD})", 
+                        desc: "○ Угол между двумя секущими равен полуразности дуг, заключенных между ними",
+                        example: "AB = 100°, CD = 30° ⇒ ∠AKB = 35°" 
+                    },
+                    { 
+                        number: 222, 
+                        title: "Угол между касательной и хордой", 
+                        formula: "\\angle ABC = \\frac{1}{2} \\overparen{AB}", 
+                        desc: "○ Угол между касательной и хордой равен половине дуги, заключенной внутри угла",
+                        example: "AB = 80° ⇒ ∠ABC = 40°" 
+                    },
+                    { 
+                        number: 223, 
+                        title: "Угол между касательной и секущей", 
+                        formula: "\\angle ABC = \\frac{1}{2} (\\overparen{AB} - \\overparen{BC})", 
+                        desc: "○ Угол между касательной и секущей равен полуразности дуг",
+                        example: "AB = 120°, BC = 40° ⇒ ∠ABC = 40°" 
+                    },
+                    { 
+                        number: 224, 
+                        title: "Угол между двумя касательными", 
+                        formula: "\\angle AKB = 180^\\circ - \\overparen{AB}", 
+                        desc: "○ Угол между двумя касательными равен 180° минус дуга, заключенная между точками касания",
+                        example: "AB = 120° ⇒ ∠AKB = 60°" 
+                    },
+                    { 
+                        number: 225, 
+                        title: "Свойство пересекающихся хорд", 
+                        formula: "AM \\cdot MB = CM \\cdot MD", 
+                        desc: "○ Произведение отрезков пересекающихся хорд равны",
+                        example: "AM=3, MB=4, CM=2 ⇒ MD = \\frac{3\\cdot4}{2}=6" 
+                    },
+                    { 
+                        number: 226, 
+                        title: "Свойство касательной и секущей", 
+                        formula: "AB^2 = AC \\cdot AD", 
+                        desc: "○ Квадрат касательной равен произведению секущей на ее внешнюю часть",
+                        example: "AC=4, AD=9 ⇒ AB = \\sqrt{36}=6" 
+                    },
+                    { 
+                        number: 227, 
+                        title: "Свойство двух секущих", 
+                        formula: "AB \\cdot AC = AD \\cdot AE", 
+                        desc: "○ Произведения отрезков двух секущих, проведенных из одной точки, равны",
+                        example: "AB=2, AC=6, AD=3 ⇒ AE = \\frac{2\\cdot6}{3}=4" 
+                    },
+                    { 
+                        number: 228, 
+                        title: "Радиус вписанной окружности (треугольник)", 
+                        formula: "r = \\frac{S}{p}", 
+                        desc: "○ Радиус окружности, вписанной в треугольник",
+                        example: "S=24, p=12 ⇒ r=2" 
+                    },
+                    { 
+                        number: 229, 
+                        title: "Радиус описанной окружности (треугольник)", 
+                        formula: "R = \\frac{abc}{4S}", 
+                        desc: "○ Радиус окружности, описанной около треугольника",
+                        example: "a=3, b=4, c=5, S=6 ⇒ R = \\frac{60}{24}=2.5" 
+                    },
+                    { 
+                        number: 230, 
+                        title: "Радиус вписанной окружности (правильный n-угольник)", 
+                        formula: "r_n = \\frac{a}{2 \\tan \\frac{180^\\circ}{n}}", 
+                        desc: "○ Радиус вписанной окружности для правильного многоугольника",
+                        example: "n=6, a=10 ⇒ r_6 = \\frac{10}{2\\tan30^\\circ} = \\frac{10}{2\\cdot0.577} \\approx 8.66" 
+                    },
+                    { 
+                        number: 231, 
+                        title: "Радиус описанной окружности (правильный n-угольник)", 
+                        formula: "R_n = \\frac{a}{2 \\sin \\frac{180^\\circ}{n}}", 
+                        desc: "○ Радиус описанной окружности для правильного многоугольника",
+                        example: "n=6, a=10 ⇒ R_6 = \\frac{10}{2\\sin30^\\circ} = \\frac{10}{2\\cdot0.5} = 10" 
+                    },
+                    { 
+                        number: 232, 
+                        title: "Длина окружности, описанной около правильного n-угольника", 
+                        formula: "C_n = 2\\pi R_n", 
+                        desc: "○ Длина описанной окружности",
+                        example: "R_6=10 ⇒ C=20π ≈ 62.83" 
+                    },
+                    { 
+                        number: 233, 
+                        title: "Площадь круга, вписанного в правильный n-угольник", 
+                        formula: "S_n = \\pi r_n^2", 
+                        desc: "○ Площадь вписанного круга",
+                        example: "r_6≈8.66 ⇒ S=75π ≈ 235.62" 
+                    },
+                    { 
+                        number: 234, 
+                        title: "Кольцо (площадь)", 
+                        formula: "S = \\pi (R^2 - r^2)", 
+                        desc: "○ Площадь кольца между двумя окружностями",
+                        example: "R=10, r=5 ⇒ S = \\pi(100-25)=75\\pi \\approx 235.62" 
+                    },
+                    { 
+                        number: 235, 
+                        title: "Центральный угол", 
+                        formula: "\\alpha = \\frac{l}{R} \\; (\\text{рад}) = \\frac{180^\\circ l}{\\pi R} \\; (\\text{град})", 
+                        desc: "○ Центральный угол через длину дуги",
+                        example: "l=5π, R=5 ⇒ α = π рад = 180°" 
+                    }
+               ]
+            },
+            vectors_plane: {
+                title: "Векторы на плоскости",
+                description: "Основные понятия и операции с векторами: координаты, длина, скалярное произведение, условия коллинеарности и перпендикулярности",
+                formulas: [
+                    { 
+                        number: 240, 
+                        title: "Координаты вектора", 
+                        formula: "\\vec{a} = \\{x, y\\} \\;\\; \\text{или} \\;\\; \\vec{a}(x, y)", 
+                        desc: "Вектор задается своими координатами",
+                        example: "\\vec{a}(3, 4)" 
+                    },
+                    { 
+                        number: 241, 
+                        title: "Координаты вектора по двум точкам", 
+                        formula: "\\vec{AB} = \\{x_B - x_A, y_B - y_A\\}", 
+                        desc: "Координаты вектора, соединяющего точки A и B",
+                        example: "A(1,2), B(4,6) \\Rightarrow \\vec{AB} = \\{3,4\\}" 
+                    },
+                    { 
+                        number: 242, 
+                        title: "Длина (модуль) вектора", 
+                        formula: "|\\vec{a}| = \\sqrt{x^2 + y^2}", 
+                        desc: "Длина вектора через его координаты",
+                        example: "\\vec{a}(3,4) \\Rightarrow |\\vec{a}| = \\sqrt{9+16}=5" 
+                    },
+                    { 
+                        number: 243, 
+                        title: "Сумма векторов", 
+                        formula: "\\vec{a} + \\vec{b} = \\{x_1 + x_2, y_1 + y_2\\}", 
+                        desc: "Координаты суммы векторов равны сумме соответствующих координат",
+                        example: "\\vec{a}(3,4), \\vec{b}(1,2) \\Rightarrow \\vec{a}+\\vec{b} = \\{4,6\\}" 
+                    },
+                    { 
+                        number: 244, 
+                        title: "Разность векторов", 
+                        formula: "\\vec{a} - \\vec{b} = \\{x_1 - x_2, y_1 - y_2\\}", 
+                        desc: "Координаты разности векторов равны разности соответствующих координат",
+                        example: "\\vec{a}(3,4), \\vec{b}(1,2) \\Rightarrow \\vec{a}-\\vec{b} = \\{2,2\\}" 
+                    },
+                    { 
+                        number: 245, 
+                        title: "Умножение вектора на число", 
+                        formula: "k\\vec{a} = \\{kx, ky\\}", 
+                        desc: "При умножении вектора на число каждая координата умножается на это число",
+                        example: "\\vec{a}(3,4), k=2 \\Rightarrow 2\\vec{a} = \\{6,8\\}" 
+                    },
+                    { 
+                        number: 246, 
+                        title: "Скалярное произведение (через координаты)", 
+                        formula: "\\vec{a} \\cdot \\vec{b} = x_1x_2 + y_1y_2", 
+                        desc: "Скалярное произведение равно сумме произведений соответствующих координат",
+                        example: "\\vec{a}(3,4), \\vec{b}(1,2) \\Rightarrow \\vec{a}\\cdot\\vec{b} = 3\\cdot1 + 4\\cdot2 = 3+8=11" 
+                    },
+                    { 
+                        number: 247, 
+                        title: "Скалярное произведение (через длины и угол)", 
+                        formula: "\\vec{a} \\cdot \\vec{b} = |\\vec{a}| \\cdot |\\vec{b}| \\cdot \\cos \\varphi", 
+                        desc: "Скалярное произведение равно произведению длин на косинус угла между векторами",
+                        example: "|\\vec{a}|=5, |\\vec{b}|=3, \\varphi=60° \\Rightarrow \\vec{a}\\cdot\\vec{b}=5\\cdot3\\cdot0.5=7.5" 
+                    },
+                    { 
+                        number: 248, 
+                        title: "Косинус угла между векторами", 
+                        formula: "\\cos \\varphi = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|} = \\frac{x_1x_2 + y_1y_2}{\\sqrt{x_1^2+y_1^2}\\sqrt{x_2^2+y_2^2}}", 
+                        desc: "Косинус угла через скалярное произведение и длины",
+                        example: "\\vec{a}(3,4), \\vec{b}(1,2) \\Rightarrow \\cos\\varphi = \\frac{11}{5\\cdot\\sqrt{5}} \\approx 0.984" 
+                    },
+                    { 
+                        number: 249, 
+                        title: "Угол между векторами", 
+                        formula: "\\varphi = \\arccos \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|}", 
+                        desc: "Угол через скалярное произведение",
+                        example: "\\cos\\varphi=0.5 \\Rightarrow \\varphi=60°" 
+                    },
+                    { 
+                        number: 250, 
+                        title: "Условие перпендикулярности векторов", 
+                        formula: "\\vec{a} \\perp \\vec{b} \\Leftrightarrow \\vec{a} \\cdot \\vec{b} = 0 \\Leftrightarrow x_1x_2 + y_1y_2 = 0", 
+                        desc: "Векторы перпендикулярны, если их скалярное произведение равно нулю",
+                        example: "\\vec{a}(2,3), \\vec{b}(-3,2) \\Rightarrow 2\\cdot(-3)+3\\cdot2=-6+6=0 \\Rightarrow \\vec{a}\\perp\\vec{b}" 
+                    },
+                    { 
+                        number: 251, 
+                        title: "Условие коллинеарности векторов", 
+                        formula: "\\vec{a} \\parallel \\vec{b} \\Leftrightarrow \\frac{x_1}{x_2} = \\frac{y_1}{y_2} = k \\;\\; (x_2,y_2 \\neq 0)", 
+                        desc: "Векторы коллинеарны, если их координаты пропорциональны",
+                        example: "\\vec{a}(2,4), \\vec{b}(1,2) \\Rightarrow \\frac{2}{1}=\\frac{4}{2}=2 \\Rightarrow \\vec{a}\\parallel\\vec{b}" 
+                    },
+                    { 
+                        number: 252, 
+                        title: "Коллинеарность через векторное произведение (псевдоскаляр)", 
+                        formula: "\\vec{a} \\parallel \\vec{b} \\Leftrightarrow x_1y_2 - x_2y_1 = 0", 
+                        desc: "Определитель из координат равен нулю",
+                        example: "\\vec{a}(2,4), \\vec{b}(1,2) \\Rightarrow 2\\cdot2-1\\cdot4=4-4=0 \\Rightarrow \\vec{a}\\parallel\\vec{b}" 
+                    },
+                    { 
+                        number: 253, 
+                        title: "Проекция вектора на вектор", 
+                        formula: "\\text{пр}_{\\vec{b}}\\vec{a} = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{b}|}", 
+                        desc: "Проекция вектора a на направление вектора b",
+                        example: "\\vec{a}(3,4), \\vec{b}(1,0) \\Rightarrow \\text{пр}=3" 
+                    },
+                    { 
+                        number: 254, 
+                        title: "Разложение вектора по ортам", 
+                        formula: "\\vec{a} = x\\vec{i} + y\\vec{j}", 
+                        desc: "Любой вектор можно разложить по координатным осям",
+                        example: "\\vec{a}(3,4) = 3\\vec{i} + 4\\vec{j}" 
+                    },
+                    { 
+                        number: 255, 
+                        title: "Орты координатных осей", 
+                        formula: "\\vec{i}(1,0), \\; \\vec{j}(0,1)", 
+                        desc: "Единичные векторы вдоль осей Ox и Oy",
+                        example: "|\\vec{i}|=1, |\\vec{j}|=1" 
+                    },
+                    { 
+                        number: 256, 
+                        title: "Направляющие косинусы", 
+                        formula: "\\cos\\alpha = \\frac{x}{|\\vec{a}|}, \\; \\cos\\beta = \\frac{y}{|\\vec{a}|}", 
+                        desc: "Косинусы углов между вектором и осями координат",
+                        example: "\\vec{a}(3,4), |\\vec{a}|=5 \\Rightarrow \\cos\\alpha=0.6, \\cos\\beta=0.8" 
+                    },
+                    { 
+                        number: 257, 
+                        title: "Свойство направляющих косинусов", 
+                        formula: "\\cos^2\\alpha + \\cos^2\\beta = 1", 
+                        desc: "Сумма квадратов направляющих косинусов равна 1",
+                        example: "0.6^2+0.8^2=0.36+0.64=1" 
+                    },
+                    { 
+                        number: 258, 
+                        title: "Площадь параллелограмма, построенного на векторах", 
+                        formula: "S_{\\text{пар}} = |x_1y_2 - x_2y_1| = |\\vec{a}| \\cdot |\\vec{b}| \\cdot \\sin\\varphi", 
+                        desc: "Модуль псевдоскалярного произведения",
+                        example: "\\vec{a}(3,0), \\vec{b}(0,4) \\Rightarrow S = |3\\cdot4-0\\cdot0| = 12" 
+                    },
+                    { 
+                        number: 259, 
+                        title: "Площадь треугольника, построенного на векторах", 
+                        formula: "S_{\\text{тр}} = \\frac{1}{2} |x_1y_2 - x_2y_1| = \\frac{1}{2} |\\vec{a}| \\cdot |\\vec{b}| \\cdot \\sin\\varphi", 
+                        desc: "Половина площади параллелограмма",
+                        example: "\\vec{a}(3,0), \\vec{b}(0,4) \\Rightarrow S = \\frac{1}{2}\\cdot12 = 6" 
+                    },
+                    { 
+                        number: 260, 
+                        title: "Координаты середины отрезка", 
+                        formula: "M\\left(\\frac{x_A+x_B}{2}, \\frac{y_A+y_B}{2}\\right)", 
+                        desc: "Середина отрезка через координаты концов",
+                        example: "A(1,2), B(5,6) \\Rightarrow M(3,4)" 
+                    },
+                    { 
+                        number: 261, 
+                        title: "Деление отрезка в данном отношении", 
+                        formula: "C\\left(\\frac{x_A+\\lambda x_B}{1+\\lambda}, \\frac{y_A+\\lambda y_B}{1+\\lambda}\\right)", 
+                        desc: "Точка C делит отрезок AB в отношении λ = AC:CB",
+                        example: "A(1,2), B(4,5), λ=2 ⇒ C\\left(\\frac{1+2\\cdot4}{3}, \\frac{2+2\\cdot5}{3}\\right) = (3,4)" 
+                    },
+                    { 
+                        number: 262, 
+                        title: "Вектор нормали к прямой", 
+                        formula: "\\vec{n} = \\{A, B\\} \\;\\; \\text{для прямой } Ax+By+C=0", 
+                        desc: "Коэффициенты уравнения прямой как координаты вектора нормали",
+                        example: "Прямая   2x+3y-5=0 ⇒ \\vec{n}=\\{2,3\\}" 
+                    },
+                    { 
+                        number: 263, 
+                        title: "Направляющий вектор прямой", 
+                        formula: "\\vec{s} = \\{B, -A\\} \\;\\; \\text{для прямой } Ax+By+C=0", 
+                        desc: "Вектор, параллельный прямой",
+                        example: "Прямая 2x+3y-5=0 ⇒ \\vec{s}=\\{3,-2\\}" 
+                    },
+                    { 
+                        number: 264, 
+                        title: "Уравнение прямой по точке и нормальному вектору", 
+                        formula: "A(x-x_0) + B(y-y_0) = 0", 
+                        desc: "Уравнение прямой, проходящей через точку (x₀,y₀) с нормалью {A,B}",
+                        example: "Точка (1,2), \\vec{n}=\\{2,3\\} ⇒ 2(x-1)+3(y-2)=0 ⇒ 2x+3y-8=0" 
+                    },
+                    { 
+                        number: 265, 
+                        title: "Уравнение прямой по точке и направляющему вектору", 
+                        formula: "\\frac{x-x_0}{m} = \\frac{y-y_0}{n}", 
+                        desc: "Параметрическое уравнение прямой с направляющим вектором {m,n}",
+                        example: "Точка (1,2), \\vec{s}=\\{3,4\\} ⇒ \\frac{x-1}{3}=\\frac{y-2}{4}" 
+                    },
+                    { 
+                        number: 266, 
+                        title: "Расстояние от точки до прямой", 
+                        formula: "d = \\frac{|Ax_0 + By_0 + C|}{\\sqrt{A^2 + B^2}}", 
+                        desc: "Расстояние от точки (x₀,y₀) до прямой Ax+By+C=0",
+                        example: "Точка (1,1), прямая 3x+4y-5=0 ⇒ d = \\frac{|3+4-5|}{\\sqrt{9+16}} = \\frac{2}{5}=0.4" 
+                    },
+                    { 
+                        number: 267, 
+                        title: "Угол между прямыми (через нормали)", 
+                        formula: "\\cos\\varphi = \\frac{|A_1A_2 + B_1B_2|}{\\sqrt{A_1^2+B_1^2}\\sqrt{A_2^2+B_2^2}}", 
+                        desc: "Косинус угла между прямыми через коэффициенты",
+                        example: "Прямые 3x+4y-5=0 и 4x-3y+2=0 ⇒ \\cos\\varphi = \\frac{|12-12|}{5\\cdot5}=0 ⇒ \\varphi=90°" 
+                    },
+                    { 
+                        number: 268, 
+                        title: "Условие параллельности прямых", 
+                        formula: "\\frac{A_1}{A_2} = \\frac{B_1}{B_2}", 
+                        desc: "Прямые параллельны, если пропорциональны коэффициенты при x и y",
+                        example: "3x+4y-5=0 и 6x+8y+1=0 ⇒ 3/6=4/8 ⇒ прямые параллельны" 
+                    },
+                    { 
+                        number: 269, 
+                        title: "Условие перпендикулярности прямых", 
+                        formula: "A_1A_2 + B_1B_2 = 0", 
+                        desc: "Прямые перпендикулярны, если скалярное произведение нормалей равно 0",
+                        example: "3x+4y-5=0 и 4x-3y+2=0 ⇒ 3·4+4·(-3)=12-12=0 ⇒ прямые перпендикулярны" 
+                    }
+                ]
+            },
+            stereometry: {
+                title: "Стереометрия",
+                description: "Формулы для вычисления объемов и площадей поверхностей геометрических тел",
+                formulas: [
+                    { 
+                        number: 400, 
+                        title: "Прямоугольный параллелепипед (объем)", 
+                        formula: "V = abc", 
+                        desc: "Объем прямоугольного параллелепипеда равен произведению трех его измерений",
+                        example: "a=4, b=5, c=6 ⇒ V = 4·5·6 = 120" 
+                    },
+                    { 
+                        number: 401, 
+                        title: "Прямоугольный параллелепипед (диагональ)", 
+                        formula: "d^2 = a^2 + b^2 + c^2", 
+                        desc: "Квадрат диагонали равен сумме квадратов трех измерений",
+                        example: "a=3, b=4, c=5 ⇒ d = \\sqrt{9+16+25} = \\sqrt{50} = 5\\sqrt{2}" 
+                    },
+                    { 
+                        number: 402, 
+                        title: "Прямоугольный параллелепипед (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = 2(ab + bc + ac)", 
+                        desc: "Сумма площадей всех шести граней",
+                        example: "a=4, b=5, c=6 ⇒ S = 2(20+30+24) = 2·74 = 148" 
+                    },
+                    { 
+                        number: 403, 
+                        title: "Куб (объем)", 
+                        formula: "V = a^3", 
+                        desc: "Объем куба равен кубу его ребра",
+                        example: "a=5 ⇒ V = 125" 
+                    },
+                    { 
+                        number: 404, 
+                        title: "Куб (диагональ)", 
+                        formula: "d = a\\sqrt{3}", 
+                        desc: "Диагональ куба через ребро",
+                        example: "a=5 ⇒ d = 5\\sqrt{3} ≈ 8.66" 
+                    },
+                    { 
+                        number: 405, 
+                        title: "Куб (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = 6a^2", 
+                        desc: "Площадь поверхности куба",
+                        example: "a=5 ⇒ S = 6·25 = 150" 
+                    },
+                    { 
+                        number: 406, 
+                        title: "Призма прямая (объем)", 
+                        formula: "V = S_{\\text{осн}} \\cdot h", 
+                        desc: "Объем прямой призмы равен произведению площади основания на высоту",
+                        example: "S_{\\text{осн}}=20, h=10 ⇒ V = 200" 
+                    },
+                    { 
+                        number: 407, 
+                        title: "Призма прямая (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = P_{\\text{осн}} \\cdot h", 
+                        desc: "Площадь боковой поверхности прямой призмы",
+                        example: "P_{\\text{осн}}=15, h=10 ⇒ S_{\\text{бок}} = 150" 
+                    },
+                    { 
+                        number: 408, 
+                        title: "Призма прямая (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = S_{\\text{бок}} + 2S_{\\text{осн}}", 
+                        desc: "Полная поверхность прямой призмы",
+                        example: "S_{\\text{бок}}=150, S_{\\text{осн}}=20 ⇒ S_{\\text{полн}} = 150+40=190" 
+                    },
+                    { 
+                        number: 409, 
+                        title: "Призма наклонная (объем)", 
+                        formula: "V = S_{\\text{осн}} \\cdot h = S_{\\text{сеч}} \\cdot l", 
+                        desc: "Объем наклонной призмы через высоту или через перпендикулярное сечение",
+                        example: "S_{\\text{осн}}=20, h=8 ⇒ V=160" 
+                    },
+                    { 
+                        number: 410, 
+                        title: "Параллелепипед наклонный (объем)", 
+                        formula: "V = S_{\\text{осн}} \\cdot h", 
+                        desc: "Объем наклонного параллелепипеда",
+                        example: "S_{\\text{осн}}=25, h=7 ⇒ V=175" 
+                    },
+                    { 
+                        number: 411, 
+                        title: "Пирамида (объем)", 
+                        formula: "V = \\frac{1}{3} S_{\\text{осн}} \\cdot h", 
+                        desc: "Объем пирамиды равен одной трети произведения площади основания на высоту",
+                        example: "S_{\\text{осн}}=30, h=9 ⇒ V = \\frac{1}{3}·30·9 = 90" 
+                    },
+                    { 
+                        number: 412, 
+                        title: "Пирамида правильная (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = \\frac{1}{2} P_{\\text{осн}} \\cdot l", 
+                        desc: "Где l — апофема (высота боковой грани)",
+                        example: "P_{\\text{осн}}=20, l=8 ⇒ S_{\\text{бок}} = \\frac{1}{2}·20·8 = 80" 
+                    },
+                    { 
+                        number: 413, 
+                        title: "Пирамида правильная (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = S_{\\text{осн}} + S_{\\text{бок}}", 
+                        desc: "Сумма площади основания и боковой поверхности",
+                        example: "S_{\\text{осн}}=25, S_{\\text{бок}}=80 ⇒ S_{\\text{полн}} = 105" 
+                    },
+                    { 
+                        number: 414, 
+                        title: "Пирамида (апофема через высоту и радиус)", 
+                        formula: "l = \\sqrt{h^2 + r^2}", 
+                        desc: "Апофема правильной пирамиды через высоту и радиус вписанной окружности основания",
+                        example: "h=6, r=4 ⇒ l = \\sqrt{36+16} = \\sqrt{52} ≈ 7.21" 
+                    },
+                    { 
+                        number: 415, 
+                        title: "Усеченная пирамида (объем)", 
+                        formula: "V = \\frac{h}{3}(S_1 + \\sqrt{S_1S_2} + S_2)", 
+                        desc: "Объем усеченной пирамиды через площади оснований и высоту",
+                        example: "S_1=25, S_2=16, h=6 ⇒ V = \\frac{6}{3}(25+\\sqrt{400}+16) = 2(25+20+16) = 2·61=122" 
+                    },
+                    { 
+                        number: 416, 
+                        title: "Усеченная пирамида правильная (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = \\frac{1}{2}(P_1 + P_2) \\cdot l", 
+                        desc: "Где l — апофема усеченной пирамиды",
+                        example: "P_1=20, P_2=12, l=8 ⇒ S_{\\text{бок}} = \\frac{1}{2}(20+12)·8 = \\frac{1}{2}·32·8 = 128" 
+                    },
+                    { 
+                        number: 417, 
+                        title: "Цилиндр (объем)", 
+                        formula: "V = \\pi R^2 h", 
+                        desc: "Объем цилиндра равен произведению площади основания на высоту",
+                        example: "R=5, h=10 ⇒ V = \\pi·25·10 = 250\\pi ≈ 785.4" 
+                    },
+                    { 
+                        number: 418, 
+                        title: "Цилиндр (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = 2\\pi R h", 
+                        desc: "Площадь боковой поверхности цилиндра",
+                        example: "R=5, h=10 ⇒ S_{\\text{бок}} = 2\\pi·5·10 = 100\\pi ≈ 314.16" 
+                    },
+                    { 
+                        number: 419, 
+                        title: "Цилиндр (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = 2\\pi R h + 2\\pi R^2 = 2\\pi R (R + h)", 
+                        desc: "Сумма боковой поверхности и двух оснований",
+                        example: "R=5, h=10 ⇒ S_{\\text{полн}} = 2\\pi·5(5+10) = 10\\pi·15 = 150\\pi ≈ 471.24" 
+                    },
+                    { 
+                        number: 420, 
+                        title: "Конус (объем)", 
+                        formula: "V = \\frac{1}{3} \\pi R^2 h", 
+                        desc: "Объем конуса равен одной трети произведения площади основания на высоту",
+                        example: "R=5, h=12 ⇒ V = \\frac{1}{3}\\pi·25·12 = \\frac{300\\pi}{3} = 100\\pi ≈ 314.16" 
+                    },
+                    { 
+                        number: 421, 
+                        title: "Конус (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = \\pi R l", 
+                        desc: "Где l — образующая конуса",
+                        example: "R=5, l=13 ⇒ S_{\\text{бок}} = \\pi·5·13 = 65\\pi ≈ 204.2" 
+                    },
+                    { 
+                        number: 422, 
+                        title: "Конус (полная поверхность)", 
+                        formula: "S_{\\text{полн}} = \\pi R l + \\pi R^2 = \\pi R (R + l)", 
+                        desc: "Сумма боковой поверхности и основания",
+                        example: "R=5, l=13 ⇒ S_{\\text{полн}} = \\pi·5(5+13) = 5\\pi·18 = 90\\pi ≈ 282.74" 
+                    },
+                    { 
+                        number: 423, 
+                        title: "Конус (образующая через высоту и радиус)", 
+                        formula: "l = \\sqrt{R^2 + h^2}", 
+                        desc: "Образующая конуса через радиус основания и высоту",
+                        example: "R=5, h=12 ⇒ l = \\sqrt{25+144} = \\sqrt{169} = 13" 
+                    },
+                    { 
+                        number: 424, 
+                        title: "Усеченный конус (объем)", 
+                        formula: "V = \\frac{1}{3} \\pi h (R_1^2 + R_1R_2 + R_2^2)", 
+                        desc: "Объем усеченного конуса через радиусы оснований и высоту",
+                        example: "R_1=5, R_2=3, h=6 ⇒ V = \\frac{1}{3}\\pi·6(25+15+9) = 2\\pi·49 = 98\\pi ≈ 307.88" 
+                    },
+                    { 
+                        number: 425, 
+                        title: "Усеченный конус (боковая поверхность)", 
+                        formula: "S_{\\text{бок}} = \\pi l (R_1 + R_2)", 
+                        desc: "Где l — образующая усеченного конуса",
+                        example: "R_1=5, R_2=3, l=7 ⇒ S_{\\text{бок}} = \\pi·7·8 = 56\\pi ≈ 175.93" 
+                    },
+                    { 
+                        number: 426, 
+                        title: "Усеченный конус (образующая)", 
+                        formula: "l = \\sqrt{h^2 + (R_1 - R_2)^2}", 
+                        desc: "Образующая через высоту и разность радиусов",
+                        example: "R_1=5, R_2=3, h=6 ⇒ l = \\sqrt{36 + 4} = \\sqrt{40} = 2\\sqrt{10} ≈ 6.32" 
+                    },
+                    { 
+                        number: 427, 
+                        title: "Шар (объем)", 
+                        formula: "V = \\frac{4}{3} \\pi R^3", 
+                        desc: "Объем шара через радиус",
+                        example: "R=6 ⇒ V = \\frac{4}{3}\\pi·216 = 288\\pi ≈ 904.78" 
+                    },
+                    { 
+                        number: 428, 
+                        title: "Сфера (площадь поверхности)", 
+                        formula: "S = 4\\pi R^2", 
+                        desc: "Площадь поверхности сферы",
+                        example: "R=6 ⇒ S = 4\\pi·36 = 144\\pi ≈ 452.39" 
+                    },
+                    { 
+                        number: 429, 
+                        title: "Шаровой сегмент (объем)", 
+                        formula: "V = \\pi h^2 \\left(R - \\frac{h}{3}\\right)", 
+                        desc: "Объем шарового сегмента через высоту и радиус шара",
+                        example: "R=6, h=2 ⇒ V = \\pi·4·(6-\\frac{2}{3}) = 4\\pi·\\frac{16}{3} = \\frac{64\\pi}{3} ≈ 67.02" 
+                    },
+                    { 
+                        number: 430, 
+                        title: "Шаровой сектор (объем)", 
+                        formula: "V = \\frac{2}{3} \\pi R^2 h", 
+                        desc: "Объем шарового сектора через радиус шара и высоту сегмента",
+                        example: "R=6, h=2 ⇒ V = \\frac{2}{3}\\pi·36·2 = \\frac{144\\pi}{3} = 48\\pi ≈ 150.8" 
+                    },
+                    { 
+                        number: 431, 
+                        title: "Шаровой слой (объем)", 
+                        formula: "V = \\frac{1}{6} \\pi h (3a^2 + 3b^2 + h^2)", 
+                        desc: "Где a и b — радиусы оснований, h — высота слоя",
+                        example: "a=5, b=4, h=2 ⇒ V = \\frac{1}{6}\\pi·2(75+48+4) = \\frac{1}{3}\\pi·127 = \\frac{127\\pi}{3} ≈ 133.0" 
+                    },
+                    { 
+                        number: 432, 
+                        title: "Теорема о трех перпендикулярах", 
+                        formula: "\\text{Если } a \\perp b \\text{ и } a \\perp c \\text{, то } a \\perp \\alpha", 
+                        desc: "Прямая, перпендикулярная двум пересекающимся прямым плоскости, перпендикулярна плоскости",
+                        example: "a ⊥ b, a ⊥ c, b∩c ⇒ a ⊥ плоскости (b,c)" 
+                    },
+                    { 
+                        number: 433, 
+                        title: "Теорема о трех перпендикулярах (обратная)", 
+                        formula: "\\text{Если } a \\perp \\alpha \\text{ и } b \\subset \\alpha \\text{, то } a \\perp b", 
+                        desc: "Прямая, перпендикулярная плоскости, перпендикулярна любой прямой в этой плоскости",
+                        example: "a ⊥ α, b ⊂ α ⇒ a ⊥ b" 
+                    },
+                    { 
+                        number: 434, 
+                        title: "Угол между прямой и плоскостью", 
+                        formula: "\\sin\\varphi = \\frac{|\\vec{n} \\cdot \\vec{s}|}{|\\vec{n}| \\cdot |\\vec{s}|}", 
+                        desc: "Синус угла между прямой (с направляющим вектором s) и плоскостью (с нормалью n)",
+                        example: "s{1,0,0}, n{0,1,0} ⇒ sinφ = 0 ⇒ φ = 0°" 
+                    },
+                    { 
+                        number: 435, 
+                        title: "Угол между плоскостями", 
+                        formula: "\\cos\\varphi = \\frac{|\\vec{n_1} \\cdot \\vec{n_2}|}{|\\vec{n_1}| \\cdot |\\vec{n_2}|}", 
+                        desc: "Косинус угла между плоскостями через их нормали",
+                        example: "n_1{1,0,0}, n_2{0,1,0} ⇒ cosφ = 0 ⇒ φ = 90°" 
+                    },
+                    { 
+                        number: 436, 
+                        title: "Расстояние от точки до плоскости", 
+                        formula: "d = \\frac{|Ax_0 + By_0 + Cz_0 + D|}{\\sqrt{A^2 + B^2 + C^2}}", 
+                        desc: "Расстояние от точки (x₀,y₀,z₀) до плоскости Ax+By+Cz+D=0",
+                        example: "Точка (1,1,1), плоскость x+y+z-3=0 ⇒ d = \\frac{|1+1+1-3|}{\\sqrt{3}} = 0" 
+                    },
+                    { 
+                        number: 437, 
+                        title: "Расстояние между скрещивающимися прямыми", 
+                        formula: "d = \\frac{|(\\vec{a_1} - \\vec{a_2}) \\cdot (\\vec{s_1} \\times \\vec{s_2})|}{|\\vec{s_1} \\times \\vec{s_2}|}", 
+                        desc: "Расстояние через смешанное и векторное произведения",
+                        example: "Сложная формула для аналитической геометрии" 
+                    },
+                    { 
+                        number: 438, 
+                        title: "Площадь ортогональной проекции", 
+                        formula: "S_{\\text{пр}} = S \\cdot \\cos\\varphi", 
+                        desc: "Площадь проекции фигуры равна площади фигуры, умноженной на косинус угла между плоскостями",
+                        example: "S=20, φ=60° ⇒ S_{\\text{пр}} = 20·0.5 = 10" 
+                    }
+                ]
+            },
+            binomial: {
+                title: "Бином Ньютона",
+                description: "Формулы для разложения степени бинома и свойства биномиальных коэффициентов",
+                formulas: [
+                    { 
+                        number: 450, 
+                        title: "Бином Ньютона (общая формула)", 
+                        formula: "(a + b)^n = \\sum_{k=0}^{n} C_n^k a^{n-k} b^k", 
+                        desc: "Разложение степени суммы двух слагаемых",
+                        example: "n=3: (a+b)^3 = C_3^0 a^3 + C_3^1 a^2b + C_3^2 ab^2 + C_3^3 b^3 = a^3 + 3a^2b + 3ab^2 + b^3" 
+                    },
+                    { 
+                        number: 451, 
+                        title: "Биномиальные коэффициенты", 
+                        formula: "C_n^k = \\binom{n}{k} = \\frac{n!}{k!(n-k)!}", 
+                        desc: "Число сочетаний из n по k",
+                        example: "C_5^2 = \\frac{5!}{2!3!} = \\frac{120}{2·6} = 10" 
+                    },
+                    { 
+                        number: 452, 
+                        title: "Общий член разложения бинома", 
+                        formula: "T_{k+1} = C_n^k a^{n-k} b^k", 
+                        desc: "Формула для (k+1)-го члена разложения",
+                        example: "В (a+b)^5: T_3 = C_5^2 a^3 b^2 = 10a^3b^2" 
+                    },
+                    { 
+                        number: 453, 
+                        title: "Бином Ньютона для (a - b)^n", 
+                        formula: "(a - b)^n = \\sum_{k=0}^{n} (-1)^k C_n^k a^{n-k} b^k", 
+                        desc: "Разложение степени разности (знаки чередуются)",
+                        example: "(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3" 
+                    },
+                    { 
+                        number: 454, 
+                        title: "Свойство симметрии коэффициентов", 
+                        formula: "C_n^k = C_n^{n-k}", 
+                        desc: "Биномиальные коэффициенты симметричны",
+                        example: "C_7^2 = C_7^5 = 21" 
+                    },
+                    { 
+                        number: 455, 
+                        title: "Рекуррентная формула", 
+                        formula: "C_n^k = C_{n-1}^{k-1} + C_{n-1}^k", 
+                        desc: "Каждый коэффициент равен сумме двух вышестоящих (треугольник Паскаля)",
+                        example: "C_6^3 = C_5^2 + C_5^3 = 10 + 10 = 20" 
+                    },
+                    { 
+                        number: 456, 
+                        title: "Сумма биномиальных коэффициентов", 
+                        formula: "\\sum_{k=0}^{n} C_n^k = 2^n", 
+                        desc: "Сумма всех коэффициентов равна 2ⁿ",
+                        example: "n=4: 1+4+6+4+1 = 16 = 2^4" 
+                    },
+                    { 
+                        number: 457, 
+                        title: "Сумма коэффициентов с чередованием знаков", 
+                        formula: "\\sum_{k=0}^{n} (-1)^k C_n^k = 0", 
+                        desc: "При n ≥ 1 сумма знакопеременных коэффициентов равна нулю",
+                        example: "n=4: 1-4+6-4+1 = 0" 
+                    },
+                    { 
+                        number: 458, 
+                        title: "Сумма квадратов коэффициентов", 
+                        formula: "\\sum_{k=0}^{n} (C_n^k)^2 = C_{2n}^n", 
+                        desc: "Сумма квадратов биномиальных коэффициентов",
+                        example: "n=3: 1^2+3^2+3^2+1^2 = 1+9+9+1 = 20 = C_6^3" 
+                    },
+                    { 
+                        number: 459, 
+                        title: "Треугольник Паскаля (рекуррентное построение)", 
+                        formula: "\\begin{matrix} n=0: & 1 \\\\ n=1: & 1 \\; 1 \\\\ n=2: & 1 \\; 2 \\; 1 \\\\ n=3: & 1 \\; 3 \\; 3 \\; 1 \\\\ n=4: & 1 \\; 4 \\; 6 \\; 4 \\; 1 \\end{matrix}", 
+                        desc: "Каждое число равно сумме двух чисел над ним",
+                        example: "Для n=5: 1,5,10,10,5,1" 
+                    },
+                    { 
+                        number: 460, 
+                        title: "Биномиальная теорема для произвольного показателя", 
+                        formula: "(1 + x)^\\alpha = \\sum_{k=0}^{\\infty} \\binom{\\alpha}{k} x^k", 
+                        desc: "Обобщение для действительного α (бесконечный ряд)",
+                        example: "(1+x)^{1/2} = 1 + \\frac{1}{2}x - \\frac{1}{8}x^2 + \\frac{1}{16}x^3 - \\ldots" 
+                    },
+                    { 
+                        number: 461, 
+                        title: "Обобщенные биномиальные коэффициенты", 
+                        formula: "\\binom{\\alpha}{k} = \\frac{\\alpha(\\alpha-1)\\ldots(\\alpha-k+1)}{k!}", 
+                        desc: "Для произвольного действительного α",
+                        example: "\\binom{0.5}{2} = \\frac{0.5·(-0.5)}{2} = -0.125" 
+                    },
+                    { 
+                        number: 462, 
+                        title: "Полиномиальная теорема", 
+                        formula: "(x_1 + x_2 + \\ldots + x_m)^n = \\sum_{k_1+\\ldots+k_m=n} \\frac{n!}{k_1!\\ldots k_m!} x_1^{k_1}\\ldots x_m^{k_m}", 
+                        desc: "Обобщение бинома на сумму m слагаемых",
+                        example: "(a+b+c)^2 = a^2+b^2+c^2 + 2ab+2ac+2bc" 
+                    },
+                    { 
+                        number: 463, 
+                        title: "Мультиномиальные коэффициенты", 
+                        formula: "\\frac{n!}{k_1!k_2!\\ldots k_m!}", 
+                        desc: "Количество способов разбить n элементов на m групп",
+                        example: "n=5, k₁=2, k₂=2, k₃=1 ⇒ \\frac{5!}{2!2!1!} = \\frac{120}{4} = 30" 
+                    },
+                    { 
+                        number: 464, 
+                        title: "Бином Ньютона (частный случай n=2)", 
+                        formula: "(a+b)^2 = a^2 + 2ab + b^2", 
+                        desc: "Квадрат суммы (ФСУ)",
+                        example: "(x+3)^2 = x^2 + 6x + 9" 
+                    },
+                    { 
+                        number: 465, 
+                        title: "Бином Ньютона (частный случай n=3)", 
+                        formula: "(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3", 
+                        desc: "Куб суммы (ФСУ)",
+                        example: "(x+2)^3 = x^3 + 6x^2 + 12x + 8" 
+                    },
+                    { 
+                        number: 466, 
+                        title: "Бином Ньютона (частный случай n=4)", 
+                        formula: "(a+b)^4 = a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4", 
+                        desc: "Четвертая степень суммы",
+                        example: "Коэффициенты: 1,4,6,4,1" 
+                    },
+                    { 
+                        number: 467, 
+                        title: "Бином Ньютона (частный случай n=5)", 
+                        formula: "(a+b)^5 = a^5 + 5a^4b + 10a^3b^2 + 10a^2b^3 + 5ab^4 + b^5", 
+                        desc: "Пятая степень суммы",
+                        example: "Коэффициенты: 1,5,10,10,5,1" 
+                    },
+                    { 
+                        number: 468, 
+                        title: "Связь с треугольником Паскаля", 
+                        formula: "\\begin{matrix} & & & 1 & & & \\\\ & & 1 & & 1 & & \\\\ & 1 & & 2 & & 1 & \\\\ 1 & & 3 & & 3 & & 1 \\end{matrix}", 
+                        desc: "Биномиальные коэффициенты образуют треугольник Паскаля",
+                        example: "Строка n=3: 1,3,3,1 соответствует (a+b)³" 
+                    },
+                    { 
+                        number: 469, 
+                        title: "Число сочетаний как биномиальный коэффициент", 
+                        formula: "C_n^k = \\binom{n}{k}", 
+                        desc: "Два обозначения одного и того же",
+                        example: "C_5^2 = \\binom{5}{2} = 10" 
+                    },
+                    { 
+                        number: 470, 
+                        title: "Биномиальные коэффициенты в комбинаторике", 
+                        formula: "C_n^0 + C_n^1 + C_n^2 + \\ldots + C_n^n = 2^n", 
+                        desc: "Сумма сочетаний равна числу всех подмножеств",
+                        example: "Для n=3: 1+3+3+1=8=2³" 
+                    },
+                    { 
+                        number: 471, 
+                        title: "Тождество Вандермонда", 
+                        formula: "C_{m+n}^k = \\sum_{i=0}^{k} C_m^i C_n^{k-i}", 
+                        desc: "Свертка биномиальных коэффициентов",
+                        example: "C_{5+3}^2 = C_8^2 = 28 = C_5^0C_3^2 + C_5^1C_3^1 + C_5^2C_3^0 = 1·3 + 5·3 + 10·1 = 3+15+10=28" 
+                    },
+                    { 
+                        number: 472, 
+                        title: "Биномиальный ряд", 
+                        formula: "(1+x)^n = 1 + nx + \\frac{n(n-1)}{2!}x^2 + \\frac{n(n-1)(n-2)}{3!}x^3 + \\ldots", 
+                        desc: "Разложение для целого n",
+                        example: "n=3: (1+x)^3 = 1 + 3x + 3x^2 + x^3" 
+                    }
+                ]
+            },
+            limits: {
+                title: "Пределы",
+                description: "Основные понятия, свойства пределов и замечательные пределы",
+                formulas: [
+                    { 
+                        number: 480, 
+                        title: "Определение предела функции", 
+                        formula: "\\lim_{x \\to a} f(x) = A \\Leftrightarrow \\forall \\varepsilon > 0 \\; \\exists \\delta > 0: 0 < |x-a| < \\delta \\Rightarrow |f(x)-A| < \\varepsilon", 
+                        desc: "Определение на языке ε-δ",
+                        example: "\\lim_{x \\to 2} (3x-1) = 5" 
+                    },
+                    { 
+                        number: 481, 
+                        title: "Предел постоянной", 
+                        formula: "\\lim_{x \\to a} C = C", 
+                        desc: "Предел константы равен самой константе",
+                        example: "\\lim_{x \\to 5} 7 = 7" 
+                    },
+                    { 
+                        number: 482, 
+                        title: "Предел суммы", 
+                        formula: "\\lim_{x \\to a} (f(x) + g(x)) = \\lim f(x) + \\lim g(x)", 
+                        desc: "Предел суммы равен сумме пределов",
+                        example: "\\lim (x^2 + 2x) = \\lim x^2 + \\lim 2x" 
+                    },
+                    { 
+                        number: 483, 
+                        title: "Предел произведения", 
+                        formula: "\\lim_{x \\to a} (f(x) \\cdot g(x)) = \\lim f(x) \\cdot \\lim g(x)", 
+                        desc: "Предел произведения равен произведению пределов",
+                        example: "\\lim (x^2 \\cdot \\sin x) = \\lim x^2 \\cdot \\lim \\sin x" 
+                    },
+                    { 
+                        number: 484, 
+                        title: "Предел частного", 
+                        formula: "\\lim_{x \\to a} \\frac{f(x)}{g(x)} = \\frac{\\lim f(x)}{\\lim g(x)}, \\; \\lim g(x) \\neq 0", 
+                        desc: "Предел частного равен частному пределов",
+                        example: "\\lim \\frac{x^2}{x} = \\frac{\\lim x^2}{\\lim x} = \\frac{4}{2} = 2 \\; (x \\to 2)" 
+                    },
+                    { 
+                        number: 485, 
+                        title: "Предел сложной функции", 
+                        formula: "\\lim_{x \\to a} f(g(x)) = f(\\lim_{x \\to a} g(x))", 
+                        desc: "Если f непрерывна в точке предела",
+                        example: "\\lim_{x \\to 0} \\sin(x^2) = \\sin(\\lim x^2) = \\sin 0 = 0" 
+                    },
+                    { 
+                        number: 486, 
+                        title: "Первый замечательный предел", 
+                        formula: "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1", 
+                        desc: "Важнейший предел для тригонометрических функций",
+                        example: "\\lim_{x \\to 0} \\frac{\\sin 3x}{x} = 3 \\cdot \\lim_{3x \\to 0} \\frac{\\sin 3x}{3x} = 3 \\cdot 1 = 3" 
+                    },
+                    { 
+                        number: 487, 
+                        title: "Следствие из первого замечательного", 
+                        formula: "\\lim_{x \\to 0} \\frac{\\arcsin x}{x} = 1", 
+                        desc: "Аналогично для арксинуса",
+                        example: "\\lim_{x \\to 0} \\frac{\\arcsin 2x}{x} = 2" 
+                    },
+                    { 
+                        number: 488, 
+                        title: "Предел тангенса", 
+                        formula: "\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1", 
+                        desc: "Следствие из первого замечательного",
+                        example: "\\lim_{x \\to 0} \\frac{\\tan 5x}{2x} = \\frac{5}{2}" 
+                    },
+                    { 
+                        number: 489, 
+                        title: "Предел (1 - cos x)/x²", 
+                        formula: "\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = \\frac{1}{2}", 
+                        desc: "Важное следствие",
+                        example: "\\lim_{x \\to 0} \\frac{1 - \\cos 3x}{x^2} = \\frac{9}{2}" 
+                    },
+                    { 
+                        number: 490, 
+                        title: "Второй замечательный предел", 
+                        formula: "\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x = e", 
+                        desc: "Определение числа e ≈ 2.71828",
+                        example: "\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n = e" 
+                    },
+                    { 
+                        number: 491, 
+                        title: "Второй замечательный (другая форма)", 
+                        formula: "\\lim_{x \\to 0} (1 + x)^{1/x} = e", 
+                        desc: "Эквивалентная форма",
+                        example: "\\lim_{x \\to 0} (1 + 2x)^{1/x} = e^2" 
+                    },
+                    { 
+                        number: 492, 
+                        title: "Следствие из второго замечательного", 
+                        formula: "\\lim_{x \\to 0} \\frac{\\ln(1 + x)}{x} = 1", 
+                        desc: "Логарифмическая форма",
+                        example: "\\lim_{x \\to 0} \\frac{\\ln(1 + 3x)}{x} = 3" 
+                    },
+                    { 
+                        number: 493, 
+                        title: "Предел показательной функции", 
+                        formula: "\\lim_{x \\to 0} \\frac{e^x - 1}{x} = 1", 
+                        desc: "Эквивалентность e^x - 1 ∼ x",
+                        example: "\\lim_{x \\to 0} \\frac{e^{2x} - 1}{x} = 2" 
+                    },
+                    { 
+                        number: 494, 
+                        title: "Предел степенной функции", 
+                        formula: "\\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = \\alpha", 
+                        desc: "Обобщение для любой степени",
+                        example: "\\lim_{x \\to 0} \\frac{\\sqrt{1+x} - 1}{x} = \\frac{1}{2}" 
+                    },
+                    { 
+                        number: 495, 
+                        title: "Предел на бесконечности (многочлены)", 
+                        formula: "\\lim_{x \\to \\infty} \\frac{a_n x^n + \\ldots}{b_m x^m + \\ldots} = \\begin{cases} 0, & n < m \\\\ \\frac{a_n}{b_m}, & n = m \\\\ \\infty, & n > m \\end{cases}", 
+                        desc: "Сравнение степеней числителя и знаменателя",
+                        example: "\\lim_{x \\to \\infty} \\frac{3x^2 + 2x}{5x^2 - 1} = \\frac{3}{5}" 
+                    },
+                    { 
+                        number: 496, 
+                        title: "Предел иррациональных выражений", 
+                        formula: "\\lim_{x \\to \\infty} (\\sqrt{x^2 + ax + b} - x) = \\frac{a}{2}", 
+                        desc: "Разность корней при x → ∞",
+                        example: "\\lim_{x \\to \\infty} (\\sqrt{x^2 + 4x + 1} - x) = 2" 
+                    },
+                    { 
+                        number: 497, 
+                        title: "Теорема о двух милиционерах", 
+                        formula: "\\text{Если } g(x) \\leq f(x) \\leq h(x) \\text{ и } \\lim g = \\lim h = A \\Rightarrow \\lim f = A", 
+                        desc: "Сжатие функции между двумя, имеющими одинаковый предел",
+                        example: "\\lim_{x \\to 0} x^2 \\sin\\frac{1}{x} = 0, \\text{ т.к. } -x^2 \\leq x^2\\sin\\frac{1}{x} \\leq x^2" 
+                    },
+                    { 
+                        number: 498, 
+                        title: "Первый замечательный (для последовательностей)", 
+                        formula: "\\lim_{n \\to \\infty} n \\sin\\frac{1}{n} = 1", 
+                        desc: "Аналог для последовательностей",
+                        example: "\\lim_{n \\to \\infty} n \\sin\\frac{2}{n} = 2" 
+                    },
+                    { 
+                        number: 499, 
+                        title: "Второй замечательный (для последовательностей)", 
+                        formula: "\\lim_{n \\to \\infty} \\left(1 + \\frac{a}{n}\\right)^n = e^a", 
+                        desc: "Обобщение с параметром a",
+                        example: "\\lim_{n \\to \\infty} \\left(1 + \\frac{2}{n}\\right)^n = e^2" 
+                    },
+                    { 
+                        number: 500, 
+                        title: "Односторонние пределы", 
+                        formula: "\\lim_{x \\to a-} f(x) \\; \\text{и} \\; \\lim_{x \\to a+} f(x)", 
+                        desc: "Предел слева и справа",
+                        example: "\\lim_{x \\to 0-} \\frac{|x|}{x} = -1, \\; \\lim_{x \\to 0+} \\frac{|x|}{x} = 1" 
+                    },
+                    { 
+                        number: 501, 
+                        title: "Бесконечные пределы", 
+                        formula: "\\lim_{x \\to a} f(x) = \\infty \\Leftrightarrow \\forall M \\; \\exists \\delta: |x-a|<\\delta \\Rightarrow f(x) > M", 
+                        desc: "Функция неограниченно возрастает",
+                        example: "\\lim_{x \\to 0} \\frac{1}{x^2} = \\infty" 
+                    },
+                    { 
+                        number: 502, 
+                        title: "Предел отношения логарифмов", 
+                        formula: "\\lim_{x \\to \\infty} \\frac{\\ln x}{x^\\alpha} = 0 \\; (\\alpha > 0)", 
+                        desc: "Логарифм растет медленнее любой степени",
+                        example: "\\lim_{x \\to \\infty} \\frac{\\ln x}{x} = 0" 
+                    },
+                    { 
+                        number: 503, 
+                        title: "Предел показательной и степенной", 
+                        formula: "\\lim_{x \\to \\infty} \\frac{x^\\alpha}{a^x} = 0 \\; (a > 1)", 
+                        desc: "Показательная функция растет быстрее степенной",
+                        example: "\\lim_{x \\to \\infty} \\frac{x^{100}}{2^x} = 0" 
+                    },
+                    { 
+                        number: 504, 
+                        title: "Эквивалентные бесконечно малые", 
+                        formula: "\\begin{matrix} \\sin x \\sim x, & \\tan x \\sim x, & \\arcsin x \\sim x \\\\ \\ln(1+x) \\sim x, & e^x - 1 \\sim x, & 1 - \\cos x \\sim \\frac{x^2}{2} \\end{matrix}", 
+                        desc: "Таблица эквивалентностей при x → 0",
+                        example: "\\lim_{x \\to 0} \\frac{\\sin 3x}{\\tan 2x} = \\lim \\frac{3x}{2x} = \\frac{3}{2}" 
+                    },
+                    { 
+                        number: 505, 
+                        title: "Непрерывность функции", 
+                        formula: "f \\text{ непрерывна в } a \\Leftrightarrow \\lim_{x \\to a} f(x) = f(a)", 
+                        desc: "Предел равен значению функции",
+                        example: "f(x)=x² непрерывна в любой точке" 
+                    }
+                ]
+            },
+            function_properties: {
+                title: "Свойства функций",
+                description: "Основные характеристики функций: область определения, четность, периодичность, монотонность, экстремумы",
+                formulas: [
+                    { 
+                        number: 510, 
+                        title: "Область определения функции", 
+                        formula: "D(f) = \\{x \\in \\mathbb{R} \\mid f(x) \\text{ имеет смысл}\\}", 
+                        desc: "Множество всех допустимых значений аргумента",
+                        example: "f(x)=\\sqrt{x} \\Rightarrow D(f)=[0,\\infty)" 
+                    },
+                    { 
+                        number: 511, 
+                        title: "Область значений функции", 
+                        formula: "E(f) = \\{y \\in \\mathbb{R} \\mid \\exists x: f(x)=y\\}", 
+                        desc: "Множество всех значений, которые принимает функция",
+                        example: "f(x)=x^2 \\Rightarrow E(f)=[0,\\infty)" 
+                    },
+                    { 
+                        number: 512, 
+                        title: "Нули функции", 
+                        formula: "f(x) = 0", 
+                        desc: "Значения x, при которых функция равна нулю (точки пересечения с осью Ox)",
+                        example: "f(x)=x^2-4 \\Rightarrow x=\\pm2" 
+                    },
+                    { 
+                        number: 513, 
+                        title: "Четная функция", 
+                        formula: "f(-x) = f(x) \\; \\forall x \\in D(f)", 
+                        desc: "График симметричен относительно оси Oy",
+                        example: "f(x)=x^2, \\cos x, |x|" 
+                    },
+                    { 
+                        number: 514, 
+                        title: "Нечетная функция", 
+                        formula: "f(-x) = -f(x) \\; \\forall x \\in D(f)", 
+                        desc: "График симметричен относительно начала координат",
+                        example: "f(x)=x^3, \\sin x, \\tan x" 
+                    },
+                    { 
+                        number: 515, 
+                        title: "Функция общего вида", 
+                        formula: "f(-x) \\neq f(x) \\text{ и } f(-x) \\neq -f(x)", 
+                        desc: "Не является ни четной, ни нечетной",
+                        example: "f(x)=x^2+x, \\; f(x)=e^x" 
+                    },
+                    { 
+                        number: 516, 
+                        title: "Периодическая функция", 
+                        formula: "f(x + T) = f(x) \\; \\forall x \\in D(f), \\; T > 0", 
+                        desc: "Значения функции повторяются через период T",
+                        example: "\\sin x, \\; T=2\\pi; \\; \\tan x, \\; T=\\pi" 
+                    },
+                    { 
+                        number: 517, 
+                        title: "Наименьший положительный период", 
+                        formula: "T_0 = \\min\\{T > 0 \\mid f(x+T)=f(x) \\; \\forall x\\}", 
+                        desc: "Самый маленький период функции",
+                        example: "\\sin x \\Rightarrow T_0=2\\pi" 
+                    },
+                    { 
+                        number: 518, 
+                        title: "Период сложной функции", 
+                        formula: "\\text{Если } T - \\text{период } f, \\text{ то } \\frac{T}{|k|} - \\text{период } f(kx+b)", 
+                        desc: "Как меняется период при линейной замене аргумента",
+                        example: "\\sin 2x \\Rightarrow T = \\frac{2\\pi}{2} = \\pi" 
+                    },
+                    { 
+                        number: 519, 
+                        title: "Возрастающая функция", 
+                        formula: "x_1 < x_2 \\Rightarrow f(x_1) < f(x_2)", 
+                        desc: "Большему аргументу соответствует большее значение",
+                        example: "f(x)=2x+3, \\; f(x)=\\ln x" 
+                    },
+                    { 
+                        number: 520, 
+                        title: "Убывающая функция", 
+                        formula: "x_1 < x_2 \\Rightarrow f(x_1) > f(x_2)", 
+                        desc: "Большему аргументу соответствует меньшее значение",
+                        example: "f(x)=-3x, \\; f(x)=\\left(\\frac{1}{2}\\right)^x" 
+                    },
+                    { 
+                        number: 521, 
+                        title: "Монотонная функция", 
+                        formula: "f \\text{ возрастает или убывает на промежутке}", 
+                        desc: "Функция, сохраняющая направление изменения",
+                        example: "f(x)=x^3 \\text{ монотонна на } \\mathbb{R}" 
+                    },
+                    { 
+                        number: 522, 
+                        title: "Неубывающая функция", 
+                        formula: "x_1 < x_2 \\Rightarrow f(x_1) \\leq f(x_2)", 
+                        desc: "Значения не уменьшаются (могут быть равны)",
+                        example: "f(x)=\\lfloor x \\rfloor \\text{ (целая часть)}" 
+                    },
+                    { 
+                        number: 523, 
+                        title: "Невозрастающая функция", 
+                        formula: "x_1 < x_2 \\Rightarrow f(x_1) \\geq f(x_2)", 
+                        desc: "Значения не увеличиваются",
+                        example: "f(x)=-\\lfloor x \\rfloor" 
+                    },
+                    { 
+                        number: 524, 
+                        title: "Точка максимума", 
+                        formula: "\\exists \\delta > 0: \\forall x \\in (x_0-\\delta, x_0+\\delta) \\Rightarrow f(x) \\leq f(x_0)", 
+                        desc: "Локальный максимум (наибольшее значение в окрестности)",
+                        example: "f(x)=-x^2, \\; x_0=0" 
+                    },
+                    { 
+                        number: 525, 
+                        title: "Точка минимума", 
+                        formula: "\\exists \\delta > 0: \\forall x \\in (x_0-\\delta, x_0+\\delta) \\Rightarrow f(x) \\geq f(x_0)", 
+                        desc: "Локальный минимум (наименьшее значение в окрестности)",
+                        example: "f(x)=x^2, \\; x_0=0" 
+                    },
+                    { 
+                        number: 526, 
+                        title: "Экстремумы функции", 
+                        formula: "x_0 - \\text{точка максимума или минимума}", 
+                        desc: "Общее название для точек максимума и минимума",
+                        example: "f(x)=x^3-3x \\Rightarrow x=\\pm1 \\text{ - экстремумы}" 
+                    },
+                    { 
+                        number: 527, 
+                        title: "Наибольшее значение функции", 
+                        formula: "\\max_{x \\in D} f(x) = \\max E(f)", 
+                        desc: "Максимальное значение на всей области определения",
+                        example: "f(x)=-x^2+4 \\Rightarrow \\max f = 4 \\text{ при } x=0" 
+                    },
+                    { 
+                        number: 528, 
+                        title: "Наименьшее значение функции", 
+                        formula: "\\min_{x \\in D} f(x) = \\min E(f)", 
+                        desc: "Минимальное значение на всей области определения",
+                        example: "f(x)=x^2+1 \\Rightarrow \\min f = 1 \\text{ при } x=0" 
+                    },
+                    { 
+                        number: 529, 
+                        title: "Выпуклая функция (вверх)", 
+                        formula: "f(\\lambda x_1 + (1-\\lambda)x_2) \\leq \\lambda f(x_1) + (1-\\lambda)f(x_2)", 
+                        desc: "График лежит ниже хорды",
+                        example: "f(x)=x^2 \\text{ выпукла вниз (вогнута)}" 
+                    },
+                    { 
+                        number: 530, 
+                        title: "Вогнутая функция (выпукла вниз)", 
+                        formula: "f(\\lambda x_1 + (1-\\lambda)x_2) \\geq \\lambda f(x_1) + (1-\\lambda)f(x_2)", 
+                        desc: "График лежит выше хорды",
+                        example: "f(x)=\\sqrt{x} \\text{ вогнута}" 
+                    },
+                    { 
+                        number: 531, 
+                        title: "Точка перегиба", 
+                        formula: "\\text{Точка, где выпуклость меняется на вогнутость}", 
+                        desc: "Изменение направления изгиба графика",
+                        example: "f(x)=x^3 \\Rightarrow x=0 \\text{ - точка перегиба}" 
+                    },
+                    { 
+                        number: 532, 
+                        title: "Асимптота (вертикальная)", 
+                        formula: "\\lim_{x \\to a\\pm} f(x) = \\pm \\infty", 
+                        desc: "Прямая x = a, к которой график приближается по вертикали",
+                        example: "f(x)=\\frac{1}{x} \\Rightarrow x=0 \\text{ - вертикальная асимптота}" 
+                    },
+                    { 
+                        number: 533, 
+                        title: "Асимптота (горизонтальная)", 
+                        formula: "\\lim_{x \\to \\pm\\infty} f(x) = b", 
+                        desc: "Прямая y = b, к которой график приближается на бесконечности",
+                        example: "f(x)=\\frac{1}{x} \\Rightarrow y=0 \\text{ - горизонтальная асимптота}" 
+                    },
+                    { 
+                        number: 534, 
+                        title: "Асимптота (наклонная)", 
+                        formula: "y = kx + b, \\; k = \\lim_{x \\to \\infty} \\frac{f(x)}{x}, \\; b = \\lim_{x \\to \\infty} (f(x) - kx)", 
+                        desc: "Наклонная прямая, к которой стремится график",
+                        example: "f(x)=\\frac{x^2+1}{x} \\Rightarrow y=x \\text{ - наклонная асимптота}" 
+                    },
+                    { 
+                        number: 535, 
+                        title: "Обратимая функция", 
+                        formula: "f(x_1) = f(x_2) \\Leftrightarrow x_1 = x_2 \\; (\\text{инъективность})", 
+                        desc: "Разным x соответствуют разные y",
+                        example: "f(x)=x^3 \\text{ обратима, } f(x)=x^2 \\text{ нет}" 
+                    },
+                    { 
+                        number: 536, 
+                        title: "Обратная функция", 
+                        formula: "f^{-1}(y) = x \\Leftrightarrow f(x) = y", 
+                        desc: "Функция, обратная к f",
+                        example: "f(x)=2x+3 \\Rightarrow f^{-1}(y)=\\frac{y-3}{2}" 
+                    },
+                    { 
+                        number: 537, 
+                        title: "Свойство обратной функции", 
+                        formula: "f^{-1}(f(x)) = x, \\; f(f^{-1}(y)) = y", 
+                        desc: "Композиция прямой и обратной функции дает тождество",
+                        example: "\\arcsin(\\sin x) = x \\text{ при } x \\in [-\\pi/2, \\pi/2]" 
+                    },
+                    { 
+                        number: 538, 
+                        title: "График обратной функции", 
+                        formula: "\\text{Симметричен графику } f \\text{ относительно } y=x", 
+                        desc: "Свойство симметрии",
+                        example: "y=x^2 \\text{ и } y=\\sqrt{x} \\text{ симметричны }" 
+                    },
+                    { 
+                        number: 539, 
+                        title: "Сложная функция", 
+                        formula: "F(x) = f(g(x))", 
+                        desc: "Композиция двух функций",
+                        example: "f(u)=\\sin u, \\; g(x)=x^2 \\Rightarrow F(x)=\\sin(x^2)" 
+                    },
+                    { 
+                        number: 540, 
+                        title: "Непрерывная функция", 
+                        formula: "\\lim_{x \\to a} f(x) = f(a) \\; \\forall a \\in D(f)", 
+                        desc: "График можно нарисовать, не отрывая руки",
+                        example: "f(x)=x^2, \\; \\sin x, \\; e^x \\text{ непрерывны}" 
+                    },
+                    { 
+                        number: 541, 
+                        title: "Точка разрыва", 
+                        formula: "\\lim_{x \\to a} f(x) \\neq f(a) \\text{ или предел не существует}", 
+                        desc: "Нарушение непрерывности",
+                        example: "f(x)=\\frac{1}{x} \\text{ разрыв в } x=0" 
+                    },
+                    { 
+                        number: 542, 
+                        title: "Ограниченная функция", 
+                        formula: "\\exists M: |f(x)| \\leq M \\; \\forall x \\in D(f)", 
+                        desc: "Функция не принимает сколь угодно больших значений",
+                        example: "\\sin x, \\cos x \\text{ ограничены: } |\\sin x| \\leq 1" 
+                    },
+                    { 
+                        number: 543, 
+                        title: "Сжимающее отображение", 
+                        formula: "|f(x) - f(y)| \\leq q|x-y|, \\; 0 < q < 1", 
+                        desc: "Расстояние между образами меньше расстояния между прообразами",
+                        example: "f(x)=\\frac{x}{2} \\text{ сжимающее с } q=1/2" 
+                    }
+                ]
+            },
+            integrals: {
+                title: "Интегралы и первообразная",
+                description: "Таблица интегралов, формула Ньютона-Лейбница, площадь под кривой",
+                formulas: [
+                    { number: 85, title: "Определение первообразной", formula: "F'(x) = f(x) \\Rightarrow F(x) - \\text{первообразная для } f(x)", desc: "Первообразная - функция, производная которой равна данной" },
+                    { number: 86, title: "Неопределенный интеграл", formula: "\\int f(x) dx = F(x) + C", desc: "Множество всех первообразных" },
+                    { number: 87, title: "Формула Ньютона-Лейбница", formula: "\\int_a^b f(x) dx = F(b) - F(a)", desc: "Вычисление определенного интеграла" },
+                    { number: 88, title: "Интеграл степенной функции", formula: "\\int x^n dx = \\frac{x^{n+1}}{n+1} + C, \\; n \\neq -1", desc: "Интеграл от x в степени n" },
+                    { number: 89, title: "Интеграл 1/x", formula: "\\int \\frac{1}{x} dx = \\ln|x| + C", desc: "Интеграл от обратной функции" },
+                    { number: 90, title: "Интеграл синуса", formula: "\\int \\sin x \\, dx = -\\cos x + C", desc: "Интеграл от синуса" },
+                    { number: 91, title: "Интеграл косинуса", formula: "\\int \\cos x \\, dx = \\sin x + C", desc: "Интеграл от косинуса" },
+                    { number: 92, title: "Интеграл тангенса", formula: "\\int \\tan x \\, dx = -\\ln|\\cos x| + C", desc: "Интеграл от тангенса" },
+                    { number: 93, title: "Интеграл котангенса", formula: "\\int \\cot x \\, dx = \\ln|\\sin x| + C", desc: "Интеграл от котангенса" },
+                    { number: 94, title: "Интеграл экспоненты", formula: "\\int e^x dx = e^x + C", desc: "Интеграл от экспоненты" },
+                    { number: 95, title: "Интеграл показательной функции", formula: "\\int a^x dx = \\frac{a^x}{\\ln a} + C", desc: "Интеграл от показательной функции" },
+                    { number: 96, title: "Интеграл 1/(1+x²)", formula: "\\int \\frac{1}{1 + x^2} dx = \\arctan x + C", desc: "Интеграл, дающий арктангенс" },
+                    { number: 97, title: "Интеграл 1/√(1-x²)", formula: "\\int \\frac{1}{\\sqrt{1 - x^2}} dx = \\arcsin x + C", desc: "Интеграл, дающий арксинус" },
+                    { number: 98, title: "Площадь под кривой", formula: "S = \\int_a^b f(x) dx", desc: "Площадь криволинейной трапеции" },
+                    { number: 99, title: "Площадь между кривыми", formula: "S = \\int_a^b (f(x) - g(x)) dx", desc: "Площадь фигуры между двумя кривыми" },
+                    { number: 100, title: "Объем тела вращения", formula: "V = \\pi \\int_a^b (f(x))^2 dx", desc: "Объем тела, образованного вращением вокруг оси Ox" }
+                ]
+            },
+            logarithms: {
+                title: "Логарифмы и показательная функция",
+                description: "Свойства логарифмов, основное логарифмическое тождество, переход к новому основанию",
+                formulas: [
+                    { number: 101, title: "Определение логарифма", formula: "\\log_a b = c \\Leftrightarrow a^c = b", desc: "Логарифм числа b по основанию a" },
+                    { number: 102, title: "Основное логарифмическое тождество", formula: "a^{\\log_a b} = b", desc: "Связь логарифма и показательной функции" },
+                    { number: 103, title: "Логарифм произведения", formula: "\\log_a (xy) = \\log_a x + \\log_a y", desc: "Логарифм произведения равен сумме логарифмов" },
+                    { number: 104, title: "Логарифм частного", formula: "\\log_a \\left(\\frac{x}{y}\\right) = \\log_a x - \\log_a y", desc: "Логарифм частного равен разности логарифмов" },
+                    { number: 105, title: "Логарифм степени", formula: "\\log_a x^m = m \\log_a x", desc: "Логарифм степени равен произведению показателя на логарифм основания" },
+                    { number: 106, title: "Логарифм корня", formula: "\\log_a \\sqrt[n]{x} = \\frac{1}{n} \\log_a x", desc: "Логарифм корня" },
+                    { number: 107, title: "Переход к новому основанию", formula: "\\log_a b = \\frac{\\log_c b}{\\log_c a}", desc: "Формула перехода к новому основанию" },
+                    { number: 108, title: "Следствие перехода", formula: "\\log_a b = \\frac{1}{\\log_b a}", desc: "Взаимосвязь логарифмов с взаимно обратными основаниями" },
+                    { number: 109, title: "Десятичный логарифм", formula: "\\lg x = \\log_{10} x", desc: "Десятичный логарифм (основание 10)" },
+                    { number: 110, title: "Натуральный логарифм", formula: "\\ln x = \\log_e x, \\; e \\approx 2.71828", desc: "Натуральный логарифм (основание e)" },
+                    { number: 111, title: "Логарифм единицы", formula: "\\log_a 1 = 0", desc: "Логарифм единицы по любому основанию равен нулю" },
+                    { number: 112, title: "Логарифм основания", formula: "\\log_a a = 1", desc: "Логарифм основания равен единице" },
+                    { number: 113, title: "Показательная функция", formula: "y = a^x, \\; a > 0, a \\neq 1", desc: "Общий вид показательной функции" },
+                    { number: 114, title: "Свойства показательной функции", formula: "a^0 = 1, \\; a^1 = a, \\; a^{x+y} = a^x \\cdot a^y", desc: "Основные свойства показательной функции" }
+                ]
+            }
+        };
+
+        // База данных задач
+        const tasksDB = {
+            fsu: {
+                title: "ФСУ",
+                count: 36,
+                tasks: [ 
+               // ЗАДАЧИ ПО ТЕМЕ "ФОРМУЛЫ СОКРАЩЕННОГО УМНОЖЕНИЯ (ФСУ)"
+
+        {
+            number: 1,
+            condition: "Раскройте скобки: (x+5)^2",
+            solution: "Используем формулу квадрата суммы: (a+b)^2 = a^2 + 2ab + b^2\n(x+5)^2 = x^2 + 2·x·5 + 5^2 = x^2 + 10x + 25",
+            answer: "x^2 + 10x + 25"
+        },
+        {
+            number: 2,
+            condition: "Раскройте скобки: (3a+2)^2",
+            solution: "(3a+2)^2 = (3a)^2 + 2·3a·2 + 2^2 = 9a^2 + 12a + 4",
+            answer: "9a^2 + 12a + 4"
+        },
+        {
+            number: 3,
+            condition: "Раскройте скобки: (4x+3y)^2",
+            solution: "(4x+3y)^2 = (4x)^2 + 2·4x·3y + (3y)^2 = 16x^2 + 24xy + 9y^2",
+            answer: "16x^2 + 24xy + 9y^2"
+        },
+        {
+            number: 4,
+            condition: "Раскройте скобки: (2m+5n)^2",
+            solution: "(2m+5n)^2 = (2m)^2 + 2·2m·5n + (5n)^2 = 4m^2 + 20mn + 25n^2",
+            answer: "4m^2 + 20mn + 25n^2"
+        },
+        
+        // Квадрат разности (4 задачи)
+        {
+            number: 5,
+            condition: "Раскройте скобки: (x-7)^2",
+            solution: "Используем формулу квадрата разности: (a-b)^2 = a^2 - 2ab + b^2\n(x-7)^2 = x^2 - 2·x·7 + 7^2 = x^2 - 14x + 49",
+            answer: "x^2 - 14x + 49"
+        },
+        {
+            number: 6,
+            condition: "Раскройте скобки: (5a-3)^2",
+            solution: "(5a-3)^2 = (5a)^2 - 2·5a·3 + 3^2 = 25a^2 - 30a + 9",
+            answer: "25a^2 - 30a + 9"
+        },
+        {
+            number: 7,
+            condition: "Раскройте скобки: (3x-4y)^2",
+            solution: "(3x-4y)^2 = (3x)^2 - 2·3x·4y + (4y)^2 = 9x^2 - 24xy + 16y^2",
+            answer: "9x^2 - 24xy + 16y^2"
+        },
+        {
+            number: 8,
+            condition: "Раскройте скобки: (6a-7b)^2",
+            solution: "(6a-7b)^2 = (6a)^2 - 2·6a·7b + (7b)^2 = 36a^2 - 84ab + 49b^2",
+            answer: "36a^2 - 84ab + 49b^2"
+        },
+        
+        // Разность квадратов (4 задачи)
+        {
+            number: 9,
+            condition: "Разложите на множители: x^2 - 49",
+            solution: "Используем формулу разности квадратов: a^2 - b^2 = (a-b)(a+b)\nx^2 - 49 = (x-7)(x+7)",
+            answer: "(x-7)(x+7)"
+        },
+        {
+            number: 10,
+            condition: "Разложите на множители: 25a^2 - 16",
+            solution: "25a^2 - 16 = (5a)^2 - 4^2 = (5a-4)(5a+4)",
+            answer: "(5a-4)(5a+4)"
+        },
+        {
+            number: 11,
+            condition: "Разложите на множители: 81x^2 - 64y^2",
+            solution: "81x^2 - 64y^2 = (9x)^2 - (8y)^2 = (9x-8y)(9x+8y)",
+            answer: "(9x-8y)(9x+8y)"
+        },
+        {
+            number: 12,
+            condition: "Разложите на множители: 36a^2 - 25b^2",
+            solution: "36a^2 - 25b^2 = (6a)^2 - (5b)^2 = (6a-5b)(6a+5b)",
+            answer: "(6a-5b)(6a+5b)"
+        },
+        
+        // Куб суммы (4 задачи)
+        {
+            number: 13,
+            condition: "Раскройте скобки: (x+2)^3",
+            solution: "Используем формулу куба суммы: (a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\n(x+2)^3 = x^3 + 3x^2·2 + 3x·2^2 + 2^3 = x^3 + 6x^2 + 12x + 8",
+            answer: "x^3 + 6x^2 + 12x + 8"
+        },
+        {
+            number: 14,
+            condition: "Раскройте скобки: (2a+1)^3",
+            solution: "(2a+1)^3 = (2a)^3 + 3·(2a)^2·1 + 3·2a·1^2 + 1^3 = 8a^3 + 12a^2 + 6a + 1",
+            answer: "8a^3 + 12a^2 + 6a + 1"
+        },
+        {
+            number: 15,
+            condition: "Раскройте скобки: (3x+2y)^3",
+            solution: "(3x+2y)^3 = (3x)^3 + 3·(3x)^2·2y + 3·3x·(2y)^2 + (2y)^3 = 27x^3 + 54x^2y + 36xy^2 + 8y^3",
+            answer: "27x^3 + 54x^2y + 36xy^2 + 8y^3"
+        },
+        {
+            number: 16,
+            condition: "Раскройте скобки: (4a+3b)^3",
+            solution: "(4a+3b)^3 = (4a)^3 + 3·(4a)^2·3b + 3·4a·(3b)^2 + (3b)^3 = 64a^3 + 144a^2b + 108ab^2 + 27b^3",
+            answer: "64a^3 + 144a^2b + 108ab^2 + 27b^3"
+        },
+        
+        // Куб разности (4 задачи)
+        {
+            number: 17,
+            condition: "Раскройте скобки: (x-3)^3",
+            solution: "Используем формулу куба разности: (a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\n(x-3)^3 = x^3 - 3x^2·3 + 3x·3^2 - 3^3 = x^3 - 9x^2 + 27x - 27",
+            answer: "x^3 - 9x^2 + 27x - 27"
+        },
+        {
+            number: 18,
+            condition: "Раскройте скобки: (2a-3)^3",
+            solution: "(2a-3)^3 = (2a)^3 - 3·(2a)^2·3 + 3·2a·3^2 - 3^3 = 8a^3 - 36a^2 + 54a - 27",
+            answer: "8a^3 - 36a^2 + 54a - 27"
+        },
+        {
+            number: 19,
+            condition: "Раскройте скобки: (4x-5y)^3",
+            solution: "(4x-5y)^3 = (4x)^3 - 3·(4x)^2·5y + 3·4x·(5y)^2 - (5y)^3 = 64x^3 - 240x^2y + 300xy^2 - 125y^3",
+            answer: "64x^3 - 240x^2y + 300xy^2 - 125y^3"
+        },
+        {
+            number: 20,
+            condition: "Раскройте скобки: (3a-4b)^3",
+            solution: "(3a-4b)^3 = (3a)^3 - 3·(3a)^2·4b + 3·3a·(4b)^2 - (4b)^3 = 27a^3 - 108a^2b + 144ab^2 - 64b^3",
+            answer: "27a^3 - 108a^2b + 144ab^2 - 64b^3"
+        },
+        
+        // Сумма кубов (4 задачи)
+        {
+            number: 21,
+            condition: "Разложите на множители: x^3 + 27",
+            solution: "Используем формулу суммы кубов: a^3 + b^3 = (a+b)(a^2 - ab + b^2)\nx^3 + 27 = x^3 + 3^3 = (x+3)(x^2 - 3x + 9)",
+            answer: "(x+3)(x^2 - 3x + 9)"
+        },
+        {
+            number: 22,
+            condition: "Разложите на множители: 8a^3 + 1",
+            solution: "8a^3 + 1 = (2a)^3 + 1^3 = (2a+1)(4a^2 - 2a + 1)",
+            answer: "(2a+1)(4a^2 - 2a + 1)"
+        },
+        {
+            number: 23,
+            condition: "Разложите на множители: 27x^3 + 64y^3",
+            solution: "27x^3 + 64y^3 = (3x)^3 + (4y)^3 = (3x+4y)(9x^2 - 12xy + 16y^2)",
+            answer: "(3x+4y)(9x^2 - 12xy + 16y^2)"
+        },
+        {
+            number: 24,
+            condition: "Разложите на множители: 125a^3 + 8b^3",
+            solution: "125a^3 + 8b^3 = (5a)^3 + (2b)^3 = (5a+2b)(25a^2 - 10ab + 4b^2)",
+            answer: "(5a+2b)(25a^2 - 10ab + 4b^2)"
+        },
+        
+        // Разность кубов (4 задачи)
+        {
+            number: 25,
+            condition: "Разложите на множители: x^3 - 64",
+            solution: "Используем формулу разности кубов: a^3 - b^3 = (a-b)(a^2 + ab + b^2)\nx^3 - 64 = x^3 - 4^3 = (x-4)(x^2 + 4x + 16)",
+            answer: "(x-4)(x^2 + 4x + 16)"
+        },
+        {
+            number: 26,
+            condition: "Разложите на множители: 27a^3 - 8",
+            solution: "27a^3 - 8 = (3a)^3 - 2^3 = (3a-2)(9a^2 + 6a + 4)",
+            answer: "(3a-2)(9a^2 + 6a + 4)"
+        },
+        {
+            number: 27,
+            condition: "Разложите на множители: 64x^3 - 125y^3",
+            solution: "64x^3 - 125y^3 = (4x)^3 - (5y)^3 = (4x-5y)(16x^2 + 20xy + 25y^2)",
+            answer: "(4x-5y)(16x^2 + 20xy + 25y^2)"
+        },
+        {
+            number: 28,
+            condition: "Разложите на множители: 216a^3 - 27b^3",
+            solution: "216a^3 - 27b^3 = (6a)^3 - (3b)^3 = (6a-3b)(36a^2 + 18ab + 9b^2) = 3(2a-b)(36a^2 + 18ab + 9b^2)",
+            answer: "3(2a-b)(36a^2 + 18ab + 9b^2)"
+        },
+        
+        // Квадрат суммы трех (4 задачи)
+        {
+            number: 29,
+            condition: "Раскройте скобки: (x+y+z)^2",
+            solution: "Используем формулу квадрата суммы трех: (a+b+c)^2 = a^2 + b^2 + c^2 + 2ab + 2ac + 2bc\n(x+y+z)^2 = x^2 + y^2 + z^2 + 2xy + 2xz + 2yz",
+            answer: "x^2 + y^2 + z^2 + 2xy + 2xz + 2yz"
+        },
+        {
+            number: 30,
+            condition: "Раскройте скобки: (2a+b+3c)^2",
+            solution: "(2a+b+3c)^2 = (2a)^2 + b^2 + (3c)^2 + 2·2a·b + 2·2a·3c + 2·b·3c = 4a^2 + b^2 + 9c^2 + 4ab + 12ac + 6bc",
+            answer: "4a^2 + b^2 + 9c^2 + 4ab + 12ac + 6bc"
+        },
+        {
+            number: 31,
+            condition: "Раскройте скобки: (x+2y-1)^2",
+            solution: "(x+2y-1)^2 = x^2 + (2y)^2 + (-1)^2 + 2·x·2y + 2·x·(-1) + 2·2y·(-1) = x^2 + 4y^2 + 1 + 4xy - 2x - 4y",
+            answer: "x^2 + 4y^2 + 1 + 4xy - 2x - 4y"
+        },
+        {
+            number: 32,
+            condition: "Раскройте скобки: (3a-2b+4c)^2",
+            solution: "(3a-2b+4c)^2 = (3a)^2 + (-2b)^2 + (4c)^2 + 2·3a·(-2b) + 2·3a·4c + 2·(-2b)·4c = 9a^2 + 4b^2 + 16c^2 - 12ab + 24ac - 16bc",
+            answer: "9a^2 + 4b^2 + 16c^2 - 12ab + 24ac - 16bc"
+        },
+        
+        // Квадрат разности трех (4 задачи)
+        {
+            number: 33,
+            condition: "Раскройте скобки: (x-y-z)^2",
+            solution: "Используем формулу квадрата разности трех: (a-b-c)^2 = a^2 + b^2 + c^2 - 2ab - 2ac + 2bc\n(x-y-z)^2 = x^2 + y^2 + z^2 - 2xy - 2xz + 2yz",
+            answer: "x^2 + y^2 + z^2 - 2xy - 2xz + 2yz"
+        },
+        {
+            number: 34,
+            condition: "Раскройте скобки: (2a-3b-4c)^2",
+            solution: "(2a-3b-4c)^2 = (2a)^2 + (-3b)^2 + (-4c)^2 - 2·2a·3b - 2·2a·4c + 2·(-3b)·(-4c) = 4a^2 + 9b^2 + 16c^2 - 12ab - 16ac + 24bc",
+            answer: "4a^2 + 9b^2 + 16c^2 - 12ab - 16ac + 24bc"
+        },
+        {
+            number: 35,
+            condition: "Раскройте скобки: (5x-y-2z)^2",
+            solution: "(5x-y-2z)^2 = (5x)^2 + (-y)^2 + (-2z)^2 - 2·5x·y - 2·5x·2z + 2·(-y)·(-2z) = 25x^2 + y^2 + 4z^2 - 10xy - 20xz + 4yz",
+            answer: "25x^2 + y^2 + 4z^2 - 10xy - 20xz + 4yz"
+        },
+        {
+            number: 36,
+            condition: "Раскройте скобки: (3a-4b-5c)^2",
+            solution: "(3a-4b-5c)^2 = (3a)^2 + (-4b)^2 + (-5c)^2 - 2·3a·4b - 2·3a·5c + 2·(-4b)·(-5c) = 9a^2 + 16b^2 + 25c^2 - 24ab - 30ac + 40bc",
+            answer: "9a^2 + 16b^2 + 25c^2 - 24ab - 30ac + 40bc"
+        }
+    ]
+},
+            powers: {
+                title: "Степени и корни",
+                count: 6,
+                tasks: [
+                    {
+                        number: 1,
+                        condition: "Упростите: \\(\\frac{a^{5} \\cdot a^{3}}{a^{4}}\\)",
+                        solution: "При умножении степени складываются, при делении - вычитаются:\n\\(a^{5} \\cdot a^{3} = a^{5+3} = a^{8}\\)\n\\(\\frac{a^{8}}{a^{4}} = a^{8-4} = a^{4}\\)",
+                        answer: "\\boxed{a^{4}}"
+                    },
+                    {
+                        number: 2,
+                        condition: "Вычислите: \\(\\sqrt{50} - \\sqrt{18}\\)",
+                        solution: "Вынесем множители из-под корня:\n\\(\\sqrt{50} = \\sqrt{25 \\cdot 2} = 5\\sqrt{2}\\)\n\\(\\sqrt{18} = \\sqrt{9 \\cdot 2} = 3\\sqrt{2}\\)\n\\(5\\sqrt{2} - 3\\sqrt{2} = 2\\sqrt{2}\\)",
+                        answer: "\\boxed{2\\sqrt{2}}"
+                    },
+                    {
+                        number: 3,
+                        condition: "Найдите значение выражения: \\(8^{2/3}\\)",
+                        solution: "\\(8^{2/3} = (8^{1/3})^2 = (\\sqrt[3]{8})^2 = 2^2 = 4\\)",
+                        answer: "\\boxed{4}"
+                    }
+                ]
+            },
+            // ЗАДАЧИ ПО ТЕМЕ "КОМБИНАТОРИКА И ФАКТОРИАЛЫ"
+            combinatorics: {
+                title: "Комбинаторика и факториалы",
+                count: 61,
+                tasks: [
+                    // Факториал (4 задачи)
+                    {
+                        number: 1,
+                        condition: "Вычислите: 5!",
+                        solution: "Факториал числа n равен произведению всех натуральных чисел от 1 до n\n\n\\(5! = 1 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 = 120\\)",
+                        answer: "120"
+                    },
+                    {
+                        number: 2,
+                        condition: "Вычислите: 7!",
+                        solution: "\\(7! = 1 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 = 5040\\)",
+                        answer: "5040"
+                    },
+                    {
+                        number: 3,
+                        condition: "Вычислите: \\frac{10!}{8!}",
+                        solution: "\\(10! = 10 \\cdot 9 \\cdot 8!\\)\n\n\\(\\frac{10!}{8!} = \\frac{10 \\cdot 9 \\cdot 8!}{8!} = 10 \\cdot 9 = 90\\)",
+                        answer: "90"
+                    },
+                    {
+                        number: 4,
+                        condition: "Сократите дробь: \\frac{(n+1)!}{n!}",
+                        solution: "\\((n+1)! = (n+1) \\cdot n!\\)\n\n\\(\\frac{(n+1)!}{n!} = \\frac{(n+1) \\cdot n!}{n!} = n+1\\)",
+                        answer: "n+1"
+                    },
+                    
+                    // Факториал нуля (3 задачи)
+                    {
+                        number: 5,
+                        condition: "Чему равен 0!?",
+                        solution: "По определению факториал нуля равен 1",
+                        answer: "1"
+                    },
+                    {
+                        number: 6,
+                        condition: "Вычислите: 0! + 1! + 2!",
+                        solution: "\\(0! = 1,\\; 1! = 1,\\; 2! = 2\\)\n\n\\(1 + 1 + 2 = 4\\)",
+                        answer: "4"
+                    },
+                    {
+                        number: 7,
+                        condition: "Вычислите: \\frac{5!}{0! \\cdot 5!}",
+                        solution: "\\(0! = 1,\\; 5! = 120\\)\n\n\\(\\frac{120}{1 \\cdot 120} = 1\\)",
+                        answer: "1"
+                    },
+                    
+                    // Рекуррентная формула факториала (3 задачи)
+                    {
+                        number: 8,
+                        condition: "Используя рекуррентную формулу, найдите 6!, если 5! = 120",
+                        solution: "Рекуррентная формула: \\(n! = n \\cdot (n-1)!\\)\n\n\\(6! = 6 \\cdot 5! = 6 \\cdot 120 = 720\\)",
+                        answer: "720"
+                    },
+                    {
+                        number: 9,
+                        condition: "Зная, что 7! = 5040, найдите 8!",
+                        solution: "\\(8! = 8 \\cdot 7! = 8 \\cdot 5040 = 40320\\)",
+                        answer: "40320"
+                    },
+                    {
+                        number: 10,
+                        condition: "Выразите 10! через 9!",
+                        solution: "\\(10! = 10 \\cdot 9!\\)",
+                        answer: "10 \\cdot 9!"
+                    },
+                    
+                    // Перестановки без повторений (4 задачи)
+                    {
+                        number: 11,
+                        condition: "Сколькими способами можно расставить 5 различных книг на полке?",
+                        solution: "Число перестановок из \\(n\\) элементов: \\(P_n = n!\\)\n\n\\(P_5 = 5! = 120\\)",
+                        answer: "120"
+                    },
+                    {
+                        number: 12,
+                        condition: "Сколько различных шестизначных чисел можно составить из цифр 1,2,3,4,5,6, используя каждую цифру один раз?",
+                        solution: "\\(P_6 = 6! = 720\\)",
+                        answer: "720"
+                    },
+                    {
+                        number: 13,
+                        condition: "В хороводе танцуют 8 детей. Сколькими способами они могут встать в круг?",
+                        solution: "Для круговых перестановок: \\((n-1)!\\)\n\n\\((8-1)! = 7! = 5040\\)",
+                        answer: "5040"
+                    },
+                    {
+                        number: 14,
+                        condition: "Сколькими способами можно рассадить 4 человек на 4 стула?",
+                        solution: "\\(P_4 = 4! = 24\\)",
+                        answer: "24"
+                    },
+                    
+                    // Перестановки с повторениями (4 задачи)
+                    {
+                        number: 15,
+                        condition: "Сколько различных слов можно составить из букв слова 'МАТЕМАТИКА'?",
+                        solution: "В слове 10 букв: М(2), А(3), Т(2), Е(1), И(1), К(1)\n\n\\(P = \\frac{10!}{2! \\cdot 3! \\cdot 2!} = \\frac{3628800}{2 \\cdot 6 \\cdot 2} = \\frac{3628800}{24} = 151200\\)",
+                        answer: "151200"
+                    },
+                    {
+                        number: 16,
+                        condition: "Сколько различных перестановок можно составить из букв слова 'АБРАКАДАБРА'?",
+                        solution: "В слове 11 букв: А(5), Б(2), Р(2), К(1), Д(1)\n\n\\(P = \\frac{11!}{5! \\cdot 2! \\cdot 2!} = \\frac{39916800}{120 \\cdot 2 \\cdot 2} = \\frac{39916800}{480} = 83160\\)",
+                        answer: "83160"
+                    },
+                    {
+                        number: 17,
+                        condition: "Сколько различных слов можно получить, переставляя буквы слова 'МОЛОКО'?",
+                        solution: "В слове 6 букв: М(1), О(3), Л(1), К(1)\n\n\\(P = \\frac{6!}{3!} = \\frac{720}{6} = 120\\)",
+                        answer: "120"
+                    },
+                    {
+                        number: 18,
+                        condition: "Сколько различных анаграмм у слова 'ТОРТ'?",
+                        solution: "В слове 4 буквы: Т(2), О(1), Р(1)\n\n\\(P = \\frac{4!}{2!} = \\frac{24}{2} = 12\\)",
+                        answer: "12"
+                    },
+                    
+                    // Размещения без повторений (4 задачи)
+                    {
+                        number: 19,
+                        condition: "Сколькими способами можно выбрать и расставить в ряд 3 книги из 7 различных?",
+                        solution: "Размещения: \\(A_n^m = \\frac{n!}{(n-m)!}\\)\n\n\\(A_7^3 = \\frac{7!}{(7-3)!} = \\frac{7!}{4!} = 7 \\cdot 6 \\cdot 5 = 210\\)",
+                        answer: "210"
+                    },
+                    {
+                        number: 20,
+                        condition: "Сколько существует трёхзначных чисел с различными цифрами?",
+                        solution: "Всего цифр 10, на первое место нельзя 0\n\n\\(A_{10}^3 - A_9^2 = 720 - 72 = 648\\)",
+                        answer: "648"
+                    },
+                    {
+                        number: 21,
+                        condition: "В классе 20 учеников. Сколькими способами можно выбрать старосту, его заместителя и казначея?",
+                        solution: "\\(A_{20}^3 = 20 \\cdot 19 \\cdot 18 = 6840\\)",
+                        answer: "6840"
+                    },
+                    {
+                        number: 22,
+                        condition: "Сколькими способами 5 человек могут занять очередь в кассу из 8 мест?",
+                        solution: "\\(A_8^5 = 8 \\cdot 7 \\cdot 6 \\cdot 5 \\cdot 4 = 6720\\)",
+                        answer: "6720"
+                    },
+                    
+                    // Размещения с повторениями (4 задачи)
+                    {
+                        number: 23,
+                        condition: "Сколько трёхзначных чисел можно составить из цифр 1,2,3,4 (цифры могут повторяться)?",
+                        solution: "Размещения с повторениями: \\(\\overline{A}_n^m = n^m\\)\n\n\\(\\overline{A}_4^3 = 4^3 = 64\\)",
+                        answer: "64"
+                    },
+                    {
+                        number: 24,
+                        condition: "Сколько различных четырёхбуквенных слов можно составить из 6 букв (буквы могут повторяться)?",
+                        solution: "\\(6^4 = 1296\\)",
+                        answer: "1296"
+                    },
+                    {
+                        number: 25,
+                        condition: "Сколько существует пятизначных двоичных кодов?",
+                        solution: "\\(2^5 = 32\\)",
+                        answer: "32"
+                    },
+                    {
+                        number: 26,
+                        condition: "В лифт 9-этажного дома вошли 4 человека. Сколькими способами они могут выйти на разных этажах, начиная со второго?",
+                        solution: "Каждый может выйти на любом из 8 этажей\n\n\\(8^4 = 4096\\)",
+                        answer: "4096"
+                    },
+                    
+                    // Сочетания без повторений (4 задачи)
+                    {
+                        number: 27,
+                        condition: "Сколькими способами можно выбрать 3 книги из 7 различных?",
+                        solution: "Сочетания: \\(C_n^m = \\frac{n!}{m!(n-m)!}\\)\n\n\\(C_7^3 = \\frac{7!}{3! \\cdot 4!} = \\frac{7 \\cdot 6 \\cdot 5}{3 \\cdot 2 \\cdot 1} = \\frac{210}{6} = 35\\)",
+                        answer: "35"
+                    },
+                    {
+                        number: 28,
+                        condition: "В классе 20 учеников. Сколькими способами можно выбрать 3 делегатов на конференцию?",
+                        solution: "\\(C_{20}^3 = \\frac{20 \\cdot 19 \\cdot 18}{3 \\cdot 2 \\cdot 1} = \\frac{6840}{6} = 1140\\)",
+                        answer: "1140"
+                    },
+                    {
+                        number: 29,
+                        condition: "Сколькими способами можно выбрать 5 карт из колоды в 36 карт?",
+                        solution: "\\(C_{36}^5 = \\frac{36 \\cdot 35 \\cdot 34 \\cdot 33 \\cdot 32}{5 \\cdot 4 \\cdot 3 \\cdot 2 \\cdot 1} = \\frac{376992}{120} = 376992\\)",
+                        answer: "376992"
+                    },
+                    {
+                        number: 30,
+                        condition: "Сколько существует способов разбить 10 человек на две команды по 5 человек?",
+                        solution: "\\(\\frac{C_{10}^5}{2!} = \\frac{252}{2} = 126\\)",
+                        answer: "126"
+                    },
+                    
+                    // Сочетания с повторениями (4 задачи)
+                    {
+                        number: 31,
+                        condition: "В кондитерской продают 4 вида пирожных. Сколькими способами можно купить 7 пирожных?",
+                        solution: "Сочетания с повторениями: \\(\\overline{C}_n^m = C_{n+m-1}^m\\)\n\n\\(\\overline{C}_4^7 = C_{10}^7 = C_{10}^3 = \\frac{10 \\cdot 9 \\cdot 8}{3 \\cdot 2 \\cdot 1} = 120\\)",
+                        answer: "120"
+                    },
+                    {
+                        number: 32,
+                        condition: "Сколькими способами можно выбрать 6 фруктов из 3 видов (яблоки, груши, бананы), если фрукты каждого вида не ограничены?",
+                        solution: "\\(\\overline{C}_3^6 = C_{8}^6 = C_{8}^2 = \\frac{8 \\cdot 7}{2} = 28\\)",
+                        answer: "28"
+                    },
+                    {
+                        number: 33,
+                        condition: "Сколько существует решений уравнения x + y + z = 10 в целых неотрицательных числах?",
+                        solution: "Число решений = \\(\\overline{C}_3^{10} = C_{12}^{10} = C_{12}^2 = \\frac{12 \\cdot 11}{2} = 66\\)",
+                        answer: "66"
+                    },
+                    {
+                        number: 34,
+                        condition: "Сколькими способами можно разложить 8 одинаковых монет по 5 карманам?",
+                        solution: "\\(\\overline{C}_5^8 = C_{12}^8 = C_{12}^4 = \\frac{12 \\cdot 11 \\cdot 10 \\cdot 9}{4 \\cdot 3 \\cdot 2 \\cdot 1} = 495\\)",
+                        answer: "495"
+                    },
+                    
+                    // Свойство симметрии сочетаний (4 задачи)
+                    {
+                        number: 35,
+                        condition: "Проверьте свойство симметрии для C_7^3",
+                        solution: "\\(C_7^3 = 35,\\; C_7^4 = 35\\)\n\n\\(C_7^3 = C_7^4\\)",
+                        answer: "35 = 35"
+                    },
+                    {
+                        number: 36,
+                        condition: "Чему равно C_{10}^7, если C_{10}^3 = 120?",
+                        solution: "По свойству симметрии \\(C_n^m = C_n^{n-m}\\)\n\n\\(C_{10}^7 = C_{10}^3 = 120\\)",
+                        answer: "120"
+                    },
+                    {
+                        number: 37,
+                        condition: "Найдите C_{15}^{12}, используя свойство симметрии",
+                        solution: "\\(C_{15}^{12} = C_{15}^3 = \\frac{15 \\cdot 14 \\cdot 13}{3 \\cdot 2 \\cdot 1} = \\frac{2730}{6} = 455\\)",
+                        answer: "455"
+                    },
+                    {
+                        number: 38,
+                        condition: "Вычислите C_{20}^{18}",
+                        solution: "\\(C_{20}^{18} = C_{20}^2 = \\frac{20 \\cdot 19}{2} = 190\\)",
+                        answer: "190"
+                    },
+                    
+                    // Рекуррентная формула сочетаний (4 задачи)
+                    {
+                        number: 39,
+                        condition: "Используя рекуррентную формулу, найдите C_8^3, если C_7^2 = 21 и C_7^3 = 35",
+                        solution: "Рекуррентная формула: \\(C_n^m = C_{n-1}^{m-1} + C_{n-1}^m\\)\n\n\\(C_8^3 = C_7^2 + C_7^3 = 21 + 35 = 56\\)",
+                        answer: "56"
+                    },
+                    {
+                        number: 40,
+                        condition: "Зная C_9^4 = 126 и C_9^5 = 126, найдите C_{10}^5",
+                        solution: "\\(C_{10}^5 = C_9^4 + C_9^5 = 126 + 126 = 252\\)",
+                        answer: "252"
+                    },
+                    {
+                        number: 41,
+                        condition: "Вычислите \\(C_6^3\\) по рекуррентной формуле",
+                        solution: "\\(C_5^2 = 10,\\; C_5^3 = 10\\)\n\n\\(C_6^3 = 10 + 10 = 20\\)",
+                        answer: "20"
+                    },
+                    {
+                        number: 42,
+                        condition: "Постройте 5-ю строку треугольника Паскаля, используя рекуррентную формулу",
+                        solution: "1, 4, 6, 4, 1\n\n\\(C_4^0 = 1,\\; C_4^1 = 4,\\; C_4^2 = 6,\\; C_4^3 = 4,\\; C_4^4 = 1\\)",
+                        answer: "1, 4, 6, 4, 1"
+                    },
+                    
+                    // Сумма сочетаний (4 задачи)
+                    {
+                        number: 43,
+                        condition: "Найдите сумму C_5^0 + C_5^1 + C_5^2 + C_5^3 + C_5^4 + C_5^5",
+                        solution: "Сумма всех сочетаний для \\(n\\) равна \\(2^n\\)\n\n\\(2^5 = 32\\)",
+                        answer: "32"
+                    },
+                    {
+                        number: 44,
+                        condition: "Вычислите: C_6^0 + C_6^1 + ... + C_6^6",
+                        solution: "\\(2^6 = 64\\)",
+                        answer: "64"
+                    },
+                    {
+                        number: 45,
+                        condition: "Чему равна сумма C_{10}^0 + C_{10}^2 + C_{10}^4 + ...?",
+                        solution: "Сумма сочетаний с четными номерами равна \\(2^{n-1}\\)\n\n\\(2^9 = 512\\)",
+                        answer: "512"
+                    },
+                    {
+                        number: 46,
+                        condition: "Найдите C_8^0 - C_8^1 + C_8^2 - C_8^3 + ... + C_8^8",
+                        solution: "Знакопеременная сумма равна 0 при \\(n > 0\\)\n\n\\(0\\)",
+                        answer: "0"
+                    },
+                    
+                    // Число подмножеств (4 задачи)
+                    {
+                        number: 47,
+                        condition: "Сколько подмножеств у множества из 4 элементов?",
+                        solution: "Число подмножеств = \\(2^n\\)\n\n\\(2^4 = 16\\)",
+                        answer: "16"
+                    },
+                    {
+                        number: 48,
+                        condition: "Множество A содержит 7 элементов. Сколько подмножеств имеет это множество?",
+                        solution: "\\(2^7 = 128\\)",
+                        answer: "128"
+                    },
+                    {
+                        number: 49,
+                        condition: "Сколько подмножеств, содержащих ровно 3 элемента, у множества из 6 элементов?",
+                        solution: "\\(C_6^3 = \\frac{6 \\cdot 5 \\cdot 4}{3 \\cdot 2 \\cdot 1} = 20\\)",
+                        answer: "20"
+                    },
+                    {
+                        number: 50,
+                        condition: "Найдите число всех подмножеств множества {a,b,c,d,e}",
+                        solution: "\\(2^5 = 32\\)",
+                        answer: "32"
+                    },
+                    
+                    // Биномиальные коэффициенты (4 задачи)
+                    {
+                        number: 51,
+                        condition: "Найдите биномиальный коэффициент C_7^4",
+                        solution: "\\(C_7^4 = \\frac{7 \\cdot 6 \\cdot 5 \\cdot 4}{4 \\cdot 3 \\cdot 2 \\cdot 1} = 35\\)",
+                        answer: "35"
+                    },
+                    {
+                        number: 52,
+                        condition: "Вычислите биномиальный коэффициент \\binom{8}{3}",
+                        solution: "\\(\\binom{8}{3} = \\frac{8 \\cdot 7 \\cdot 6}{3 \\cdot 2 \\cdot 1} = 56\\)",
+                        answer: "56"
+                    },
+                    {
+                        number: 53,
+                        condition: "Найдите коэффициент при x^3 в разложении (1+x)^7)",
+                        solution: "\\(C_7^3 = 35\\)",
+                        answer: "35"
+                    },
+                    {
+                        number: 54,
+                        condition: "Чему равен биномиальный коэффициент \\binom{10}{5}?",
+                        solution: "\\(\\binom{10}{5} = \\frac{10 \\cdot 9 \\cdot 8 \\cdot 7 \\cdot 6}{5 \\cdot 4 \\cdot 3 \\cdot 2 \\cdot 1} = 252\\)",
+                        answer: "252"
+                    },
+                    
+                    // Тождество Вандермонда (3 задачи)
+                    {
+                        number: 55,
+                        condition: "Проверьте тождество Вандермонда: C_7^3 = C_3^0 \\cdot C_4^3 + C_3^1 \\cdot C_4^2 + C_3^2 \\cdot C_4^1 + C_3^3 \\cdot C_4^0\\)",
+                        solution: "\\(C_3^0 \\cdot C_4^3 = 1 \\cdot 4 = 4\\)\n\\(C_3^1 \\cdot C_4^2 = 3 \\cdot 6 = 18\\)\n\\(C_3^2 \\cdot C_4^1 = 3 \\cdot 4 = 12\\)\n\\(C_3^3 \\cdot C_4^0 = 1 \\cdot 1 = 1\\)\n\nСумма: \\(4 + 18 + 12 + 1 = 35 = C_7^3\\)",
+                        answer: "35 = 35"
+                    },
+                    {
+                        number: 56,
+                        condition: "Используя тождество Вандермонда, найдите C_9^4, если \\(C_5^2 = 10,\\; C_5^3 = 10,\\; C_4^2 = 6,\\; C_4^1 = 4\\)",
+                        solution: "\\(C_9^4 = C_5^2 \\cdot C_4^2 + C_5^3 \\cdot C_4^1 = 10 \\cdot 6 + 10 \\cdot 4 = 60 + 40 = 100\\)",
+                        answer: "100"
+                    },
+                    {
+                        number: 57,
+                        condition: "Вычислите сумму: C_5^0 \\cdot C_5^3 + C_5^1 \\cdot C_5^2 + C_5^2 \\cdot C_5^1 + C_5^3 \\cdot C_5^0",
+                        solution: "По тождеству Вандермонда это равно \\(C_{10}^3 = \\frac{10 \\cdot 9 \\cdot 8}{3 \\cdot 2 \\cdot 1} = 120\\)",
+                        answer: "120"
+                    },
+                    
+                    // Биномиальный ряд (4 задачи)
+                    {
+                        number: 58,
+                        condition: "Найдите первые 4 члена разложения (1+x)^5 по формуле бинома Ньютона",
+                        solution: "\\((1+x)^5 = 1 + 5x + 10x^2 + 10x^3 + 5x^4 + x^5\\)\n\nПервые 4 члена: \\(1 + 5x + 10x^2 + 10x^3\\)",
+                        answer: "1 + 5x + 10x^2 + 10x^3"
+                    },
+                    {
+                        number: 59,
+                        condition: "Запишите разложение (1+x)^4",
+                        solution: "\\((1+x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4\\)",
+                        answer: "1 + 4x + 6x^2 + 4x^3 + x^4"
+                    },
+                    {
+                        number: 60,
+                        condition: "Найдите коэффициент при x^2 в разложении (1+x)^{10}",
+                        solution: "\\(C_{10}^2 = \\frac{10 \\cdot 9}{2} = 45\\)",
+                        answer: "45"
+                    },
+                    {
+                        number: 61,
+                        condition: "Запишите биномиальный ряд для (1+x)^6 до x^3 включительно",
+                        solution: "\\(1 + 6x + 15x^2 + 20x^3 + ...\\)",
+                        answer: "1 + 6x + 15x^2 + 20x^3"
+                    }
+                ]
+            },
+            quadratic: {
+                title: "Квадратные уравнения",
+                count: 5,
+                tasks: [
+                    {
+                        number: 1,
+                        condition: "Решите уравнение: \\(x^2 - 5x + 6 = 0\\)",
+                        solution: "Найдем дискриминант:\n\\(D = b^2 - 4ac = 25 - 24 = 1\\)\n\\(x_{1,2} = \\frac{5 \\pm 1}{2}\\)\n\\(x_1 = \\frac{5 + 1}{2} = 3, \\; x_2 = \\frac{5 - 1}{2} = 2\\)",
+                        answer: "\\boxed{x_1 = 3, \\; x_2 = 2}"
+                    },
+                    {
+                        number: 2,
+                        condition: "Найдите корни уравнения: \\(2x^2 - 4x - 6 = 0\\)",
+                        solution: "Разделим на 2: \\(x^2 - 2x - 3 = 0\\)\nПо теореме Виета: \\(x_1 + x_2 = 2, \\; x_1x_2 = -3\\)\n\\(x_1 = 3, \\; x_2 = -1\\)",
+                        answer: "\\boxed{x_1 = 3, \\; x_2 = -1}"
+                    },
+                    {
+                        number: 3,
+                        condition: "При каких значениях параметра p уравнение \\(x^2 + px + 9 = 0\\) имеет один корень?",
+                        solution: "Уравнение имеет один корень при D = 0:\n\\(D = p^2 - 36 = 0\\)\n\\(p^2 = 36\\)\n\\(p = \\pm 6\\)",
+                        answer: "\\boxed{p = \\pm 6}"
+                    }
+                ]
+            }
+        };
+
+        // Текущая тема и режим
+        let currentTopic = 'fsu';
+        let currentMode = 'formulas';
+
+        // Загрузка при открытии страницы
+        window.onload = function() {
+            loadTopic('fsu');
+            updateModeUI();
+        };
+
+        // Переключение режима (формулы/задачи)
+        function switchMode(mode) {
+            currentMode = mode;
+            updateModeUI();
+            
+            if (mode === 'formulas') {
+                loadTopic(currentTopic);
+                document.getElementById('sidebarTitle').textContent = '📋 ФОРМУЛЫ ПО ТЕМАМ';
+            } else {
+                showTasks(currentTopic);
+                document.getElementById('sidebarTitle').textContent = '📋 ЗАДАЧИ ПО ТЕМАМ';
+            }
+        }
+
+        // Обновление UI переключателя
+        function updateModeUI() {
+            const formulasBtn = document.getElementById('formulasModeBtn');
+            const tasksBtn = document.getElementById('tasksModeBtn');
+            
+            if (currentMode === 'formulas') {
+                formulasBtn.classList.add('active');
+                tasksBtn.classList.remove('active');
+            } else {
+                formulasBtn.classList.remove('active');
+                tasksBtn.classList.add('active');
+            }
+        }
+
+        // Смена темы
+        function changeTopic(topicId) {
+            currentTopic = topicId;
+            
+            if (currentMode === 'formulas') {
+                loadTopic(topicId);
+            } else {
+                showTasks(topicId);
+            }
+            
+            // Обновляем активную кнопку в боковом меню
+            document.querySelectorAll('.topic-list button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.topic-list button').forEach(btn => {
+                if (btn.getAttribute('onclick')?.includes(topicId)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            document.getElementById('topicSelect').value = topicId;
+        }
+
+        // Загрузка формул
+        function loadTopic(topicId) {
+            const topic = formulasDB[topicId];
+            if (!topic) return;
+
+            const contentDiv = document.getElementById('dynamicContent');
+            contentDiv.innerHTML = `
+                <div class="formulas-area">
+                    <div class="topic-header">
+                        <h2>${topic.title}</h2>
+                        <p>${topic.description}</p>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="🔍 Поиск по формулам..." onkeyup="searchFormulas()">
+                    </div>
+
+                    <div class="formulas-grid" id="formulasContainer"></div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" onclick="copyAllFormulas()">📋 КОПИРОВАТЬ ВСЕ</button>
+                        <button class="btn btn-primary" onclick="printFormulas()">🖨️ РАСПЕЧАТАТЬ</button>
+                    </div>
+                </div>
+            `;
+
+            displayFormulas(topic.formulas);
+            document.getElementById('itemCount').textContent = topic.formulas.length + ' формул';
+        }
+
+        // Отображение формул
+        function displayFormulas(formulas) {
+            const container = document.getElementById('formulasContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            formulas.forEach(f => {
+                const card = document.createElement('div');
+                card.className = 'formula-card';
+                
+                let exampleHtml = '';
+                if (f.example) {
+                    if (f.example.includes('^') || f.example.includes('_') || f.example.includes('\\')) {
+                        exampleHtml = `<div class="formula-example">📌 Пример: \\(${f.example}\\)</div>`;
+                    } else {
+                        exampleHtml = `<div class="formula-example">📌 Пример: ${f.example}</div>`;
+                    }
+                }
+                
+                card.innerHTML = `
+                    <div class="formula-number">№${f.number}</div>
+                    <div class="formula-title">${f.title}</div>
+                    <div class="formula-content">\\(${f.formula}\\)</div>
+                    <div class="formula-desc">${f.desc}</div>
+                    ${exampleHtml}
+                `;
+                container.appendChild(card);
+            });
+
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+// Показать задачи
+function showTasks(topicId) {
+    const topic = tasksDB[topicId] || { title: "Тема", tasks: [], count: 0 };
+    const formulasTopic = formulasDB[topicId] || { title: topic.title };
+    
+    const contentDiv = document.getElementById('dynamicContent');
+    
+    if (!topic.tasks || topic.tasks.length === 0) {
+        contentDiv.innerHTML = `
+            <div class="tasks-area">
+                <div class="tasks-header">
+                    <h2>Задачи по теме: ${topic.title || formulasTopic.title}</h2>
+                </div>
+                <p style="text-align: center; padding: 50px; color: #7f8c8d;">📝 Задачи для этой темы正在 подготовке...</p>
+            </div>
+        `;
+        document.getElementById('itemCount').textContent = '0 задач';
+        return;
+    }
+    
+    let tasksHtml = `
+        <div class="tasks-area">
+            <div class="tasks-header">
+                <h2>Задачи по теме: ${topic.title} <span>(с решениями)</span></h2>
+            </div>
+            <div class="tasks-grid">
+    `;
+    
+    topic.tasks.forEach(task => {
+        // Форматируем решение, разбивая на строки и правильно обрабатывая LaTeX
+        const solutionLines = task.solution.split('\n').map(line => {
+            // Проверяем, содержит ли строка LaTeX
+            if (line.includes('\\(') && line.includes('\\)')) {
+                // Строка уже содержит LaTeX, оставляем как есть
+                return `<div>\\(${line.replace(/\\\(|\\\)/g, '')}\\)</div>`;
+            } else if (line.includes('=') || line.includes('^') || line.includes('_') || 
+                       line.includes('\\') || line.includes('{') || line.includes('}')) {
+                // Строка содержит математические символы, оборачиваем в LaTeX
+                return `<div>\\(${line}\\)</div>`;
+            } else {
+                // Обычный текст
+                return `<div>${line}</div>`;
+            }
+        }).join('');
+        
+        tasksHtml += `
+            <div class="task-card">
+                <div class="task-number">Задача №${task.number}</div>
+                <div class="task-condition">
+                    <strong>Условие:</strong><br>
+                      ${task.condition.includes('=') || task.condition.includes('^') || task.condition.includes('_') || task.condition.includes('\\') 
+        ? `\\(${task.condition}\\)` 
+        : task.condition}
+                </div>
+                <div class="task-solution">
+                    <div class="task-solution-title">📝 Решение:</div>
+                    ${solutionLines}
+                </div>
+                <div class="task-answer">
+                    <div class="task-answer-title">✅ Ответ:</div>
+                    <div class="task-answer-content">\\(${task.answer}\\)</div>
+                </div>
+            </div>
+        `;
+    });
+    
+    tasksHtml += `
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="window.print()">🖨️ РАСПЕЧАТАТЬ ЗАДАЧИ</button>
+                <button class="btn btn-primary" onclick="copyAllTasks()">📋 КОПИРОВАТЬ ВСЕ</button>
+            </div>
+        </div>
+    `;
+    
+    contentDiv.innerHTML = tasksHtml;
+    
+    // Обновляем MathJax после добавления контента
+    if (window.MathJax) {
+        MathJax.typesetPromise().then(() => {
+            // Дополнительно применяем стили для переноса
+            document.querySelectorAll('.task-solution mjx-container, .task-condition mjx-container').forEach(el => {
+                el.style.overflowX = 'auto';
+                el.style.maxWidth = '100%';
+                el.style.display = 'inline-block';
+                el.style.verticalAlign = 'middle';
+            });
+        });
+    }
+    
+    document.getElementById('itemCount').textContent = (topic.tasks?.length || 0) + ' задач';
+}
+
+        // Поиск по формулам
+        function searchFormulas() {
+            if (currentMode !== 'formulas') return;
+            
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const topic = formulasDB[currentTopic];
+            
+            if (!topic) return;
+
+            if (searchText.length < 2) {
+                displayFormulas(topic.formulas);
+                document.getElementById('itemCount').textContent = topic.formulas.length + ' формул';
+                return;
+            }
+
+            const filtered = topic.formulas.filter(f => 
+                f.title.toLowerCase().includes(searchText) ||
+                f.formula.toLowerCase().includes(searchText) ||
+                f.desc.toLowerCase().includes(searchText) ||
+                (f.example && f.example.toLowerCase().includes(searchText))
+            );
+
+            displayFormulas(filtered);
+            document.getElementById('itemCount').textContent = filtered.length + ' найдено';
+        }
+
+        // Копирование всех формул
+        function copyAllFormulas() {
+            const topic = formulasDB[currentTopic];
+            let text = topic.title + '\n' + topic.description + '\n\n';
+            
+            topic.formulas.forEach(f => {
+                text += `${f.number}. ${f.title}\n`;
+                text += `${f.formula}\n`;
+                text += `${f.desc}\n`;
+                if (f.example) text += `Пример: ${f.example}\n`;
+                text += '\n';
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Все формулы скопированы в буфер обмена');
+            });
+        }
+
+        // Копирование всех задач
+        function copyAllTasks() {
+            const topic = tasksDB[currentTopic];
+            if (!topic || !topic.tasks) return;
+            
+            let text = `Задачи по теме: ${topic.title}\n\n`;
+            
+            topic.tasks.forEach(task => {
+                text += `Задача №${task.number}\n`;
+                text += `Условие: ${task.condition.replace(/\\\(|\\\)/g, '')}\n`;
+                text += `Решение: ${task.solution.replace(/\\\(|\\\)/g, '')}\n`;
+                text += `Ответ: ${task.answer.replace(/\\\(|\\\)/g, '').replace(/\\boxed\{|\}/g, '')}\n`;
+                text += '\n';
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Все задачи скопированы в буфер обмена');
+            });
+        }
+
+        // Печать формул
+        function printFormulas() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
